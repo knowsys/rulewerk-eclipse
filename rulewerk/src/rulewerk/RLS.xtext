@@ -1,0 +1,299 @@
+grammar rulewerk.RLS hidden(SKIP)
+
+generate rLS "http://www.RLS.rulewerk"
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+Model:
+	{Model}
+	(b+=Base)?
+	(p+=Prefix)*
+	(s+=Source)*
+	(st+=Statement)*
+	E*;
+
+terminal E:
+	EOF;
+
+PrefixedName:
+	t=PNAME_LN;
+
+IRIREF:
+	t=IRI;
+
+IRIBOL:
+	t=IRIREF | t=PrefixedName;
+
+Striing:
+	t=STRING_LITERAL1
+	| t=STRING_LITERAL2
+	| t=STRING_LITERAL_LONG1
+	| t=STRING_LITERAL_LONG2;
+
+Langtagg:
+	t=LANGTAG;
+
+RDFLiteral:
+	s=Striing
+	(l=Langtagg
+	| DATATYPE dt=IRIBOL)?;
+
+NumericLiteral:
+	t=INTEGER
+	| t=DECIMAL
+	| t=DOUBLE;
+
+Term:
+	s=IRIBOL
+	| c=NumericLiteral
+	| s=RDFLiteral
+	| t=UNIVAR
+	| t=EXIVAR
+	| t=VARORPREDNAME
+	| t=NAMED_NULL |
+	tt=Configurable_Literal;
+
+predicateName:
+	s=IRIBOL
+	| t=VARORPREDNAME;
+
+listOfTerms:
+	t+=Term
+	(COMMA t+=Term)*;
+
+
+NegativeLiteral:
+	TILDE predicatename=predicateName LPAREN terms=listOfTerms RPAREN;
+
+Fact:
+	predicatename=predicateName LPAREN terms=listOfTerms RPAREN;
+
+PositiveLiteral:
+	predicatename=predicateName LPAREN terms=listOfTerms RPAREN;
+
+Literal:
+	PositiveLiteral
+	| NegativeLiteral;
+
+listOfLiterals:
+	l+=Literal
+	(COMMA l+=Literal)*;
+
+listOfPositiveLiterals:
+	l+=PositiveLiteral
+	(COMMA l+=PositiveLiteral)*;
+
+Rule:
+	head=listOfPositiveLiterals ARROW body=listOfLiterals DOT;
+
+Statement:
+	statement+=Rule
+	| statement+=Fact DOT;
+
+DataSource:
+	(sourceName=DIRECTIVENAME | sourceName=VARORPREDNAME) LPAREN arg=Arguments RPAREN;
+
+Source:
+	SRC predicatename=predicateName arity=ARITY COLON dataSource=DataSource DOT;
+
+Prefix:
+	PRFX t=COLON iriString=IRIREF DOT
+	| PRFX t=PNAME_NS iriString=IRIREF DOT;
+
+Base:
+	BS iriString=IRIREF DOT;
+
+Configurable_Literal:
+	t=PIPE_DELIMITED_LITERAL | t=HASH_DELIMITED_LITERAL |
+	//s=parenDelimitedLiteral|
+	s=braceDelimitedLiteral |
+	s=bracketDelimitedLiteral;
+
+	//parenDelimitedLiteral:
+//{parenDelimitedLiteral} LPAREN (sb+=parenDelimitedLiteralBody)* RPAREN;
+
+//parenDelimitedLiteralBody:
+//s=UNPAREN;
+braceDelimitedLiteral:
+	{braceDelimitedLiteral} '{' (sb+=braceDelimitedLiteralBody)* '}';
+
+braceDelimitedLiteralBody:
+	s=UNBRACE;
+
+bracketDelimitedLiteral:
+	{bracketDelimitedLiteral} '[' (sb+=bracketDelimitedLiteralBody)* ']';
+
+bracketDelimitedLiteralBody:
+	s=UNBRACKET;
+
+Arguments:
+	{Arguments} (str+=Striing | str+=IRIBOL | t+=Term) (COMMA s=Arguments);
+
+terminal ARITY:
+	"[" INTEGER "]";
+
+terminal PRFX:
+	"@prefix ";
+
+terminal BS:
+	"@base ";
+
+terminal SRC:
+	"@source";
+
+terminal LOADCSV:
+	"load-csv";
+
+terminal LOADRDF:
+	"load-rdf";
+
+terminal SPARQL:
+	"sparql";
+
+terminal NAMED_NULL:
+	"_:" (PN_CHARS_U | ("0".."9")) ((PN_CHARS | ".")* PN_CHARS)?;
+
+terminal INTEGER:
+	("-"
+	| "+")? DIGITS;
+
+terminal DECIMAL:
+	("-" | "+")? ((DIGITS)+ "." (DIGITS)* | "." (DIGITS)+);
+
+terminal DOUBLE:
+	("+" | "-")? (('0'..'9')+ "." ("0".."9")* EXPONENT | "." ("0".."9")+ (EXPONENT) | ("0".."9")+ EXPONENT);
+
+terminal DIGITS:
+	("0".."9")+;
+
+terminal EXPONENT:
+	("e" | "E") ("+" | "-")? ("0".."9")+;
+
+terminal SKIP:
+	" "
+	| "\t"
+	| "\n"
+	| "\r"
+	| "\f" | '%' (!'\n')* '\n';
+
+terminal UNBRACE:
+	'{' (!('{' | '}'))+ '}';
+
+terminal UNBRACKET:
+	'[' (!('[' | ']'))+ ']';
+
+	//terminal UNPAREN:
+//LPAREN ( !(LPAREN | RPAREN))+ RPAREN;
+terminal PIPE_DELIMITED_LITERAL:
+	'|' (!"|")* '|';
+
+terminal HASH_DELIMITED_LITERAL:
+	'#' (!"#")* '#';
+
+terminal STRING_LITERAL1:
+// Single quoted string
+	"'" (!("'" | "\\" | "\n" | "\r") | ECHAR)* "'";
+
+terminal STRING_LITERAL2:
+// Double quoted string
+	"\"" (!("\"" | "\\" | "\n" | "\r") | ECHAR)* "\"";
+
+terminal STRING_LITERAL_LONG1:
+	"'''" (!("'" | "\\") |
+	ECHAR | ("'" (!"'")) | ("''" (!"'")))* "'''";
+
+terminal STRING_LITERAL_LONG2:
+	"\"\"\"" (!("\"" | "\\") | ECHAR | ("\"" (!"\"")) | ("\"\"" (!"\"")))* "\"\"\"";
+
+terminal ECHAR:
+	"\\" ("t" | "b" | "n" | "r" |
+	"f" | "\\" | "\"" | "'");
+
+terminal IRI:
+	'<' (!('>' | '<' | '\"' | '{' | '}' | '^' | '\\' | '|' | '`' | ('\u0000'..'\u0020')))* '>';
+
+terminal PNAME_LN:
+	(PN_PREFIX)? ":" PN_LOCAL;
+
+terminal PNAME_NS:
+	PN_PREFIX
+	":";
+
+terminal UNIVAR:
+	QMARK VARORPREDNAME;
+
+terminal EXIVAR:
+	EMARK VARORPREDNAME;
+
+terminal LANGTAG:
+	AT (A2Z)+
+	("-" (A2ZN)+)*;
+
+terminal VARORPREDNAME:
+	A2Z (A2ZN)*;
+
+terminal A2Z:
+	("a".."z" | "A".."Z");
+
+terminal A2ZN:
+	("a".."z" | "A".."Z" | "0".."9");
+
+terminal DIRECTIVENAME:
+	(AT "a".."z" | "A".."Z") ("a".."z" | "A".."Z" | "0".."9" | "-" | "_")*;
+
+terminal A2ZNX:
+	("a".."z" | "A".."Z" | "0".."9" | "-" | "_");
+
+terminal LPAREN:
+	"(";
+
+terminal RPAREN:
+	")";
+
+terminal COMMA:
+	",";
+
+terminal DOT:
+	".";
+
+terminal ARROW:
+	":-";
+
+terminal QMARK:
+	"?";
+
+terminal EMARK:
+	"!";
+
+terminal TILDE:
+	"~";
+
+terminal COLON:
+	":";
+
+terminal DATATYPE:
+	"^^";
+
+terminal AT:
+	"@";
+
+terminal PN_CHARS_BASE:
+	("A".."Z") | ("a".."z") | ("\u00c0".."\u00d6") | ("\u00d8".."\u00f6") | ("\u00f8".."\u02ff") | ("\u0370".."\u037d") |
+	("\u037f".."\u1fff") | ("\u200c".."\u200d") | ("\u2070".."\u218f") | ("\u2c00".."\u2fef") | ("\u3001".."\ud7ff") |
+	("\uf900".."\ufffd");
+
+terminal PN_CHARS_U:
+	PN_CHARS_BASE | "_";
+
+terminal PN_CHARS:
+	(PN_CHARS_U | "-" | ("0".."9") | "\u00b7" | ("\u0300".."\u036f") |
+	("\u203f".."\u2040"));
+
+terminal PN_PREFIX:
+	PN_CHARS_BASE ((PN_CHARS | ".")* PN_CHARS)?;
+
+terminal PN_LOCAL:
+	(PN_CHARS_U | ":" | ("0".."9")) ((PN_CHARS | "." | ":")* PN_CHARS)?;
+
+terminal NOT:
+	'!';
+
