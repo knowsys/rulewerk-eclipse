@@ -54,6 +54,10 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
 				<version>${tycho-version}</version>
@@ -110,6 +114,32 @@
 		</plugins>
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+						<artifactId>license-maven-plugin</artifactId>
+						<version>1.14</version>
+						<configuration />
+						<executions>
+							<execution>
+								<id>first</id>
+								<goals>
+									<goal>update-file-header</goal>
+									<goal>update-project-license</goal>
+								</goals>
+								<phase>process-sources</phase>
+								<configuration>
+									<licenseName>apache_v2</licenseName>
+									<roots>
+										<root>src</root>
+										<root>src-gen</root>
+										<root>xtend-gen</root>
+									</roots>
+									<ignoreNoFileToScan>true</ignoreNoFileToScan>
+								</configuration>
+							</execution>
+						</executions>
+				</plugin>
+				
 				<plugin>
 					<groupId>org.eclipse.xtend</groupId>
 					<artifactId>xtend-maven-plugin</artifactId>
