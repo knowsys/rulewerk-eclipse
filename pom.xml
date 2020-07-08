@@ -5,21 +5,7 @@
 	<version>0.1.0-SNAPSHOT</version>
 	<artifactId>rulewerk.parent</artifactId>
 	<packaging>pom</packaging>
-
-	<properties>
-		<xtextVersion>2.20.0</xtextVersion>
-		<mwe2Version>2.11.1</mwe2Version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>10</maven.compiler.source>
-		<maven.compiler.target>10</maven.compiler.target>
-		<!-- Tycho settings -->
-		<tycho-version>1.5.1</tycho-version>
-		<!-- Define overridable properties for tycho-surefire-plugin -->
-		<platformSystemProperties></platformSystemProperties>
-		<moduleProperties></moduleProperties>
-		<systemProperties></systemProperties>
-		<additionalTestArguments></additionalTestArguments>
-	</properties>
+	
 	<modules>
 		<module>rulewerk</module>
 		<module>rulewerk.ide</module>
@@ -29,7 +15,8 @@
 		<module>rulewerk.tests</module>
 		<module>rulewerk.ui.tests</module>
 	</modules>
-		<licenses>
+	
+	<licenses>
 		<license>
 			<name>Apache License, Version 2.0</name>
 			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
@@ -41,6 +28,17 @@
 	<organization>
 		<name>Rulewerk Developers</name>
 	</organization>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<xtextVersion>2.20.0</xtextVersion>
+		<mwe2Version>2.11.1</mwe2Version>
+		<maven.compiler.source>10</maven.compiler.source>
+		<maven.compiler.target>10</maven.compiler.target>
+		<!-- Tycho settings -->
+		<tycho-version>1.5.1</tycho-version>
+	</properties>
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -52,6 +50,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	
 	<build>
 		<plugins>
 			<plugin>
