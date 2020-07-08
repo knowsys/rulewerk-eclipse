@@ -33,8 +33,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<xtextVersion>2.20.0</xtextVersion>
 		<mwe2Version>2.11.1</mwe2Version>
-		<maven.compiler.source>10</maven.compiler.source>
-		<maven.compiler.target>10</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 		<!-- Tycho settings -->
 		<tycho-version>1.5.1</tycho-version>
 	</properties>
