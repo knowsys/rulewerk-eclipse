@@ -3,13 +3,13 @@
 
 A java Xtext plugin for the [rule language](https://github.com/knowsys/rulewerk/wiki#rule-language) of [Rulewerk](https://github.com/knowsys/rulewerk), see (https://github.com/knowsys/rulewerk/wiki/Rule-syntax-grammar) to know about the syntax of Rulewerk and (https://github.com/knowsys/rulewerk/wiki/Rule-syntax-by-examples) to look at some examples of using Rulewerk syntax
 
-Usage
+Installation
 ------------
 
 * Import the cloned folder as an existing maven project
 * Run ```mvn clean install```
-* Refresh all the projects in java
-* create a new folder with the name ```xtend-gen``` in the three modules ```rulewerkplugin.ide```, ```rulewerkplugin.ui``` and ```rulewerkplugin.ui.tests```
+* Refresh all the projects in eclipse
+* Create a new folder with the name ```xtend-gen``` in the three modules ```rulewerkplugin.ide```, ```rulewerkplugin.ui``` and ```rulewerkplugin.ui.tests```
 * Run the main project ```rulewerkplugin``` as an Eclipse Application
 
 General information
