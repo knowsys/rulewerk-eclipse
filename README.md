@@ -6,11 +6,11 @@ A java Xtext plugin for the [rule language](https://github.com/knowsys/rulewerk/
 Usage
 ------------
 
-* Import the clonned folder as an existing maven project
+* Import the cloned folder as an existing maven project
 * Run ```mvn clean install```
 * Refresh all the projects in java
 * create a new folder with the name ```xtend-gen``` in the three modules ```rulewerkplugin.ide```, ```rulewerkplugin.ui``` and ```rulewerkplugin.ui.tests```
-* Run the main project ```rulewerkplugin``` As an Eclipse Application
+* Run the main project ```rulewerkplugin``` as an Eclipse Application
 
 General information
 ------------
