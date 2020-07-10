@@ -2,7 +2,7 @@
 <?eclipse version="3.0"?>
 <plugin>
 	<extension point="org.eclipse.emf.ecore.generated_package">
-		<package
+		<package 
 			uri = "http://www.RLS.rls4eclipse"
 			class = "rls4eclipse.rLS.RLSPackage"
 			genModel = "model/generated/RLS.genmodel" />
