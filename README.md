@@ -13,6 +13,13 @@ Installation
 * Run the grammar file in found in ```rls4eclipse/src/rls4eclipse``` under the name of ```RLS.xtext``` as Generate Xtext Artifacts
 * Run the main project ```rls4eclipse``` as an Eclipse Application
 
+Currently Supported xtext Features
+------------
+* Syntax Highlighting
+* Auto-completion
+* Validations
+* Labeling
+
 General information
 ------------
 
