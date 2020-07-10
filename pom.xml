@@ -1,19 +1,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.semanticweb.rulewerk.eclipse</groupId>
+	<groupId>org.semanticweb.rls4eclipse.eclipse</groupId>
 	<version>0.1.0-SNAPSHOT</version>
-	<artifactId>rulewerk.parent</artifactId>
+	<artifactId>rls4eclipse.parent</artifactId>
 	<packaging>pom</packaging>
 	
 	<modules>
-		<module>rulewerk</module>
-		<module>rulewerk.ide</module>
-		<module>rulewerk.ui</module>
-		<module>rulewerk.target</module>
-		<module>rulewerk.feature</module>
-		<module>rulewerk.tests</module>
-		<module>rulewerk.ui.tests</module>
+		<module>rls4eclipse</module>
+		<module>rls4eclipse.ide</module>
+		<module>rls4eclipse.ui</module>
+		<module>rls4eclipse.target</module>
+		<module>rls4eclipse.feature</module>
+		<module>rls4eclipse.tests</module>
+		<module>rls4eclipse.ui.tests</module>
 	</modules>
 	
 	<licenses>
@@ -26,7 +26,7 @@
 	<inceptionYear>2018</inceptionYear>
 
 	<organization>
-		<name>Rulewerk Developers</name>
+		<name>rls4eclipse Developers</name>
 	</organization>
 
 	<properties>
@@ -75,8 +75,8 @@
 				<configuration>
 					<target>
 						<artifact>
-							<groupId>org.semanticweb.rulewerk.eclipse</groupId>
-							<artifactId>rulewerk.target</artifactId>
+							<groupId>org.semanticweb.rls4eclipse.eclipse</groupId>
+							<artifactId>rls4eclipse.target</artifactId>
 							<version>${project.version}</version>
 						</artifact>
 					</target>
