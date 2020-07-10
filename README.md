@@ -1,4 +1,4 @@
-# RuleWerk-Plugin
+# RuleWerk-eclipse
 
 
 A java Xtext plugin for the [rule language](https://github.com/knowsys/rulewerk/wiki#rule-language) of [Rulewerk](https://github.com/knowsys/rulewerk). For further information regarding the syntax of rulewerk and some of its examples see (https://github.com/knowsys/rulewerk/wiki/Rule-syntax-grammar) and (https://github.com/knowsys/rulewerk/wiki/Rule-syntax-by-examples) 
@@ -11,6 +11,16 @@ Installation
 * Refresh all the projects in eclipse
 * Create a new folder with the name ```xtend-gen``` in the three modules ```rls4eclipse.ide```, ```rls4eclipse.ui``` and ```rls4eclipse.ui.tests```
 * Run the main project ```rls4eclipse``` as an Eclipse Application
+
+Exporting rls4eclipse as a deployable feature
+------------
+* From eclipse choose ```file``` -> ```Export``` -> choose ```Deployable features``` under ```Plug-in Development```
+* Select ```rls4eclipse.feature``` under ```Available Features``` and then press ```Options```
+* Under ```Categorize repository``` press ```Browse```
+* Choose the file ```Category.xml```
+* Select ```Destination``` and then choose ```Archive file``` then press ```Browse``` and select the desired destination and file name for the feature
+* Select ```Finish```
+
 
 Currently supported xtext features
 ------------
