@@ -10,7 +10,6 @@ Installation
 * Run ```mvn clean install```
 * Refresh all the projects in eclipse
 * Create a new folder with the name ```xtend-gen``` in the three modules ```rls4eclipse.ide```, ```rls4eclipse.ui``` and ```rls4eclipse.ui.tests```
-* Run the grammar file in found in ```rls4eclipse/src/rls4eclipse``` under the name of ```RLS.xtext``` as Generate Xtext Artifacts
 * Run the main project ```rls4eclipse``` as an Eclipse Application
 
 Currently supported xtext features
