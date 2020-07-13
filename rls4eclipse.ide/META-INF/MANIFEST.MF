@@ -11,5 +11,6 @@ Require-Bundle: rls4eclipse,
  org.eclipse.xtext.xbase.ide,
  org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: rls4eclipse.ide.contentassist.antlr.internal,
- rls4eclipse.ide.contentassist.antlr
+Export-Package: rls4eclipse.ide,
+ rls4eclipse.ide.contentassist.antlr,
+ rls4eclipse.ide.contentassist.antlr.internal
