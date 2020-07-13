@@ -21,6 +21,13 @@ Exporting rls4eclipse as a deployable feature
 * Select ```Destination``` and then choose ```Archive file``` then press ```Browse``` and select the desired destination and file name for the feature
 * Select ```Finish```
 
+Installing rls4eclipse in eclipse
+------------
+* From Eclipse choose  ```Help ``` >  ```Install new Software ```
+* Selecet  ```Add ``` >  ```Archive ``` > Choose rls4eclipse archive file
+* Tick right at  ```Uncategorized ``` then press next, finalize and accept all conditions
+* Choose  ```Install anyway ```
+* Select  ```Restart now ```
 
 Currently supported xtext features
 ------------
