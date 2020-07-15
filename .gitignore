@@ -3,6 +3,7 @@ target/
 xtend-gen/
 src-gen/
 generated/
+plugin.xml_gen
 
 # Package Files #
 *.jar
