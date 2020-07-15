@@ -2,7 +2,7 @@
 target/
 xtend-gen/
 src-gen/
-model/generated/
+generated/
 
 # Package Files #
 *.jar
