@@ -7,7 +7,7 @@ Installation for development
 ------------
 For Development make sure that Xtext 2.20 is installed from eclipse's marketplace before following these steps.
 * From eclipse, select ```file``` > ```import``` > ```Maven``` > ```existing maven projects```, then select the directory of the clonned folder and press ok. Make sure that     all the projects are selected before pressing finish
-* Right click on ```rls4eclipse``` module and then choose ```Run As``` > ```Maven install```
+* Right click on ```rls4eclipse.parent``` module and then choose ```Run As``` > ```Maven install```
 * Right click on ```rls4eclipse``` module and then choose ```Run As``` > ```Eclipse Application``` (for the first time after choosing ```Run As``` the option ```Eclipse         Application``` might not be there, so instead select ```Run Configurations``` > double click on ```Eclipse Application``` and then select ```Run```
 * A new eclipse window will appear but with the features of ```rls4eclipse``` loaded and ready for testing
 
