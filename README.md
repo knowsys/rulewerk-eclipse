@@ -13,7 +13,7 @@ For Development make sure that Xtext 2.20 is installed from eclipse's marketplac
 
 Exporting rls4eclipse as a deployable feature
 ------------
-* From eclipse choose ```file``` -> ```Export``` -> choose ```Deployable features``` under ```Plug-in Development```
+* From eclipse choose ```file``` > ```Export``` > choose ```Deployable features``` under ```Plug-in Development```
 * Select ```rls4eclipse.feature``` under ```Available Features``` and then press ```Options```
 * Under ```Categorize repository``` press ```Browse```
 * Choose the file ```Category.xml```
