@@ -23,7 +23,7 @@ Exporting rls4eclipse as a deployable feature
 Installing rls4eclipse in eclipse
 ------------
 * From eclipse choose  ```Help ``` >  ```Install new Software ```
-* Selecet  ```Add ``` >  ```Archive ``` > Choose rls4eclipse archive file
+* Selecet  ```Add ``` >  ```Archive ``` > Choose the plugin's archive file
 * Tick right at  ```Uncategorized ``` then press next, finalize and accept all conditions
 * Choose  ```Install anyway ```
 * Select  ```Restart now ```
