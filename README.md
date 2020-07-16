@@ -3,14 +3,13 @@
 
 A java Xtext plugin for the [rule language](https://github.com/knowsys/rulewerk/wiki#rule-language) of [Rulewerk](https://github.com/knowsys/rulewerk). For further information regarding the syntax of rulewerk and some of its examples see (https://github.com/knowsys/rulewerk/wiki/Rule-syntax-grammar) and (https://github.com/knowsys/rulewerk/wiki/Rule-syntax-by-examples) 
 
-Installation
+Installation for development
 ------------
-* Download Xtext from Eclipse Marketplace
-* Import the cloned folder as an existing maven project
-* Run ```mvn clean install```
-* Refresh all the projects in eclipse
-* Create a new folder with the name ```xtend-gen``` in the three modules ```rls4eclipse.ide```, ```rls4eclipse.ui``` and ```rls4eclipse.ui.tests```
-* Run the main project ```rls4eclipse``` as an Eclipse Application
+If the developer does not have Xtext 2.20 installed in eclipse, then Xtext 2.20 should be installed from eclipse marketplace before following these steps.
+
+* From eclipse, select ```file``` > ```import``` > ```Maven``` > ```existing maven projects``` then select the directory of the clonned folder and press ok. Make sure that     all the projects are selected before pressing finish
+* Right click on ```rls4eclipse``` module and then choose ```Run As``` > ```Maven install```
+* Right click on ```rls4eclipse``` module and then choose ```Run As``` > ```Eclipse Application``` (for the first time after choosing ```Run As``` the option ```Eclipse         Application``` might not be there, so instead select ```Run Configurations``` > double click on ```Eclipse Application``` and then select ```Run```
 
 Exporting rls4eclipse as a deployable feature
 ------------
