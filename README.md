@@ -38,5 +38,5 @@ Currently supported xtext features
 General information
 ------------
 
-* The grammar file is found in ```rls4eclipsen/src/rls4eclipse``` under the name of ```RLS.xtext```, you can edit the grammar in this file and then run the file as Generate Xtext Artifacts before running the application to apply the grammar changes
+* The grammar file is found in ```rls4eclipse/src/rls4eclipse``` under the name of ```RLS.xtext```, you can edit the grammar in this file and then run the file as Generate Xtext Artifacts before running the application to apply the grammar changes
 * For more information regarding implementing a certain feature in xtext and the importance of each module in the project, see [Xtext Documentation](https://www.eclipse.org/Xtext/documentation/310_eclipse_support.html)
