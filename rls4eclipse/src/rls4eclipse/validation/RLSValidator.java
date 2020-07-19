@@ -27,6 +27,7 @@ import java.util.HashSet;
 
 import org.eclipse.xtext.validation.Check;
 
+import rls4eclipse.rLS.Fact;
 import rls4eclipse.rLS.Literal;
 import rls4eclipse.rLS.PositiveLiteral;
 import rls4eclipse.rLS.RLSPackage;
@@ -102,4 +103,12 @@ public class RLSValidator extends AbstractRLSValidator {
 
 	}
 
+	@Check
+	public void checkfacts(Fact fact) {
+		for (Term t : fact.getTerms().getT()) {
+			if (t.getT().startsWith("!") || t.getT().startsWith("?")) {
+				error("Facts cannot contain variables", fact.eClass().getEStructuralFeature(RLSPackage.FACT));
+			}
+		}
+	}
 }
