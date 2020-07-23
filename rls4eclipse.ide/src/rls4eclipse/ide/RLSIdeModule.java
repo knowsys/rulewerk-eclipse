@@ -3,6 +3,8 @@
  */
 package rls4eclipse.ide;
 
+import org.eclipse.xtext.ide.refactoring.IRenameStrategy2;
+
 /*-
  * #%L
  * rls4eclipse.ide
@@ -22,7 +24,6 @@ package rls4eclipse.ide;
  * limitations under the License.
  * #L%
  */
-
 
 /**
  * Use this class to register ide components.

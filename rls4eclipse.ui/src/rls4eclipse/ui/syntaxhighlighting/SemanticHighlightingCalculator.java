@@ -1,5 +1,7 @@
 package rls4eclipse.ui.syntaxhighlighting;
 
+import org.eclipse.core.commands.Command;
+
 /*-
  * #%L
  * rulewerk.ui
@@ -20,7 +22,6 @@ package rls4eclipse.ui.syntaxhighlighting;
  * #L%
  */
 
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.AbstractRule;
 import org.eclipse.xtext.RuleCall;
@@ -30,6 +31,8 @@ import org.eclipse.xtext.ide.editor.syntaxcoloring.IHighlightedPositionAcceptor;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.util.CancelIndicator;
+
+import rls4eclipse.rLS.Source;
 
 public class SemanticHighlightingCalculator extends DefaultSemanticHighlightingCalculator {
 
@@ -46,28 +49,30 @@ public class SemanticHighlightingCalculator extends DefaultSemanticHighlightingC
 			if (grammarElement instanceof RuleCall) {
 				RuleCall rc = (RuleCall) grammarElement;
 				AbstractRule r = rc.getRule();
-				// System.out.println(r.getName());
-				if (r.getName().equals("SRC")) {
-					acceptor.addPosition(node.getOffset(), node.getLength(), CLHighlightingConfiguration.Prefix_ID);
-				} else if (r.getName().equals("PRFX")) {
-					acceptor.addPosition(node.getOffset(), node.getLength(), CLHighlightingConfiguration.Source_ID);
-				} else if (r.getName().equals("PrefixedName")) {
-					acceptor.addPosition(node.getOffset(), node.getLength(), CLHighlightingConfiguration.Pname_ID);
-				} else if (r.getName().equals("COMMA") || r.getName().equals("DOT")) {
-					acceptor.addPosition(node.getOffset(), node.getLength(), CLHighlightingConfiguration.Comma_ID);
-				} else if (r.getName().equals("BS")) {
-					acceptor.addPosition(node.getOffset(), node.getLength(), CLHighlightingConfiguration.Source_ID);
-				} else if (r.getName().equals("ARROW") || r.getName().equals("COMMA") || r.getName().equals("TILDE")) {
-					acceptor.addPosition(node.getOffset(), node.getLength(), CLHighlightingConfiguration.Arrow_ID);
-				} else if (r.getName().equals("UNIVAR")) {
-					acceptor.addPosition(node.getOffset(), node.getLength(), CLHighlightingConfiguration.UniVar_ID);
-				} else if (r.getName().equals("IRIREF")) {
-					acceptor.addPosition(node.getOffset(), node.getLength(), CLHighlightingConfiguration.IRI_ID);
-				} else if (r.getName().equals("Striing")) {
-					acceptor.addPosition(node.getOffset(), node.getLength(), CLHighlightingConfiguration.String_ID);
-				} else if (r.getName().equals("EXIVAR")) {
-					acceptor.addPosition(node.getOffset(), node.getLength(), CLHighlightingConfiguration.ExiVar_ID);
-				} else if (r.getName().equals("VARORPREDNAME")) {
+				String name = r.getName();
+				int offset = node.getOffset();
+				int length = node.getLength();
+				if (name.equals("SRC")) {
+					acceptor.addPosition(offset, length, CLHighlightingConfiguration.Prefix_ID);
+				} else if (name.equals("PRFX")) {
+					acceptor.addPosition(offset, length, CLHighlightingConfiguration.Source_ID);
+				} else if (name.equals("PrefixedName")) {
+					acceptor.addPosition(offset, length, CLHighlightingConfiguration.Pname_ID);
+				} else if (name.equals("COMMA") || r.getName().equals("DOT")) {
+					acceptor.addPosition(offset, length, CLHighlightingConfiguration.Comma_ID);
+				} else if (name.equals("BS")) {
+					acceptor.addPosition(offset, length, CLHighlightingConfiguration.Source_ID);
+				} else if (name.equals("ARROW") || r.getName().equals("COMMA") || r.getName().equals("TILDE")) {
+					acceptor.addPosition(offset, length, CLHighlightingConfiguration.Arrow_ID);
+				} else if (name.equals("UNIVAR")) {
+					acceptor.addPosition(offset, length, CLHighlightingConfiguration.UniVar_ID);
+				} else if (name.equals("IRIREF")) {
+					acceptor.addPosition(offset, length, CLHighlightingConfiguration.IRI_ID);
+				} else if (name.equals("Striing")) {
+					acceptor.addPosition(offset, length, CLHighlightingConfiguration.String_ID);
+				} else if (name.equals("EXIVAR")) {
+					acceptor.addPosition(offset, length, CLHighlightingConfiguration.ExiVar_ID);
+				} else if (name.equals("VARORPREDNAME")) {
 					RuleCall rr = (RuleCall) node.getParent().getGrammarElement();
 					AbstractRule s = rr.getRule();
 					if (s.getName().equals("predicateName")) {

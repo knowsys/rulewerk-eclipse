@@ -61,4 +61,8 @@ public class RLSUiModule extends AbstractRLSUiModule {
 	public Class<? extends IXtextEditorCallback> bindIXtextEditorCallback() {
 		return NullImpl.class;
 	}
+	
+
+	
+	
 }
