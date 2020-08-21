@@ -39,7 +39,7 @@ Workflow {
 			fragment = ui.refactoring.RefactorElementNameFragment2{
 			}
 			renameRefactoring = {
-				useChangeSerializer = true
+				//useChangeSerializer = true
 			}
 			validator = {
 			// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"

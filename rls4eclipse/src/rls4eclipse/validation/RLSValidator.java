@@ -47,16 +47,14 @@ public class RLSValidator extends AbstractRLSValidator {
 		HashSet<String> a = new HashSet<String>();
 		for (Literal l : rule.getBody().getL()) {
 			for (Term f : l.getTerms().getT()) {
-				a.add(f.getT());
+				a.add(f.getUv());
 			}
 		}
 		for (PositiveLiteral x : rule.getHead().getL()) {
 			for (Term t : x.getTerms().getT()) {
-				if (t.getT().contains("?")) {
-					if (!a.contains(t.getT())) {
-						error("every universal variable in the head of the rule must also be in the body of the rule",
-								rule.eClass().getEStructuralFeature(RLSPackage.RULE));
-					}
+				if (!a.contains(t.getUv()) && (!t.getUv().isEmpty())) {
+					error("every universal variable in the head of the rule must also be in the body of the rule",
+							rule.eClass().getEStructuralFeature(RLSPackage.RULE));
 				}
 			}
 		}
@@ -68,19 +66,15 @@ public class RLSValidator extends AbstractRLSValidator {
 		HashSet<String> a = new HashSet<String>();
 		for (Literal l : rule.getBody().getL()) {
 			for (Term f : l.getTerms().getT()) {
-				if (f.getT().startsWith("?")) {
-					a.add(f.getT().replace("?", ""));
-				}
+				a.add(f.getUv().replace("?", ""));
 			}
 		}
 		for (PositiveLiteral x : rule.getHead().getL()) {
 			for (Term t : x.getTerms().getT()) {
-				if (t.getT().startsWith("!")) {
-					String s = t.getT().replace("!", "");
-					if (a.contains(s)) {
-						error("Variable that is existentially quantified in the head cannot be universally quantified in the body of the rule",
-								rule.eClass().getEStructuralFeature(RLSPackage.RULE));
-					}
+				String s = t.getEv().replace("!", "");
+				if (a.contains(s)) {
+					error("Variable that is existentially quantified in the head cannot be universally quantified in the body of the rule",
+							rule.eClass().getEStructuralFeature(RLSPackage.RULE));
 				}
 			}
 		}
@@ -91,10 +85,10 @@ public class RLSValidator extends AbstractRLSValidator {
 	public void checkExiVars(Rule rule) {
 		for (Literal l : rule.getBody().getL()) {
 			for (Term f : l.getTerms().getT()) {
-				if (f.getT().startsWith("!")) {
+				if (!f.getEv().isEmpty()) {
 					error("Existentialy quantified variables can not appear in the body of the rule",
 							rule.eClass().getEStructuralFeature(RLSPackage.RULE));
-				} else if (f.getT().startsWith("_:")) {
+				} else if (!f.getNn().isEmpty()) {
 					error("Named nulls can not appear in the body of the rule",
 							rule.eClass().getEStructuralFeature(RLSPackage.RULE));
 				}
@@ -103,12 +97,4 @@ public class RLSValidator extends AbstractRLSValidator {
 
 	}
 
-	@Check
-	public void checkfacts(Fact fact) {
-		for (Term t : fact.getTerms().getT()) {
-			if (t.getT().startsWith("!") || t.getT().startsWith("?")) {
-				error("Facts cannot contain variables", fact.eClass().getEStructuralFeature(RLSPackage.FACT));
-			}
-		}
-	}
 }

@@ -44,17 +44,17 @@ NumericLiteral:
 
 Term:
 	s=IRIBOL
-	| c=NumericLiteral
-	| s=RDFLiteral
-	| t=UNIVAR
-	| t=EXIVAR
-	| t=VARORPREDNAME
-	| t=NAMED_NULL |
-	tt=Configurable_Literal;
+	| nl=NumericLiteral
+	| rl=RDFLiteral
+	| uv=UNIVAR
+	| ev=EXIVAR
+	| v=VARORPREDNAME
+	| nn=NAMED_NULL |
+	cl=Configurable_Literal;
 
 predicateName:
-	s=IRIBOL
-	| t=VARORPREDNAME;
+	prediri=IRIBOL
+	| PredName=VARORPREDNAME;
 
 listOfTerms:
 	t+=Term

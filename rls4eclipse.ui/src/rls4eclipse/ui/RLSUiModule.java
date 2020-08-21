@@ -28,9 +28,11 @@ import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculat
 import org.eclipse.xtext.ui.editor.IXtextEditorCallback;
 import org.eclipse.xtext.ui.editor.IXtextEditorCallback.NullImpl;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
+import org.eclipse.xtext.ui.refactoring.IRenameStrategy;
 
 import rls4eclipse.ui.contentassist.AbstractRLSProposalProvider;
 import rls4eclipse.ui.contentassist.RLSProposalProvider;
+import rls4eclipse.ui.renaming.RenameRefactor;
 import rls4eclipse.ui.syntaxhighlighting.CLHighlightingConfiguration;
 import rls4eclipse.ui.syntaxhighlighting.SemanticHighlightingCalculator;
 
@@ -62,7 +64,10 @@ public class RLSUiModule extends AbstractRLSUiModule {
 		return NullImpl.class;
 	}
 	
-
+	@Override
+	public Class<? extends IRenameStrategy> bindIRenameStrategy() {
+		return RenameRefactor.class;
+	}
 	
 	
 }
