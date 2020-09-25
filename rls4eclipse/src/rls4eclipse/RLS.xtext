@@ -15,59 +15,53 @@ terminal E:
 	EOF;
 
 PrefixedName:
-	t=PNAME_LN;
+	prefixname=PNAME_LN;
 
 IRIREF:
-	t=IRI;
+	iri=IRI;
 
 IRIBOL:
-	t=IRIREF | t=PrefixedName;
-
-Striing:
-	t=STRING_LITERAL1
-	| t=STRING_LITERAL2
-	| t=STRING_LITERAL_LONG1
-	| t=STRING_LITERAL_LONG2;
+	iri=IRIREF | iri=PrefixedName;
 
 Langtagg:
-	t=LANGTAG;
+	l=LANGTAG;
 
 RDFLiteral:
 	s=Striing
 	(l=Langtagg
-	| DATATYPE dt=IRIBOL)?;
+	| DATATYPE iri=IRIBOL)?;
 
 NumericLiteral:
-	t=INTEGER
-	| t=DECIMAL
-	| t=DOUBLE;
+	int=INTEGER
+	| dec=DECIMAL
+	| dbl=DOUBLE;
 
 Term:
-	s=IRIBOL
+	iri=IRIBOL
 	| nl=NumericLiteral
 	| rl=RDFLiteral
 	| uv=UNIVAR
 	| ev=EXIVAR
 	| v=VARORPREDNAME
-	| nn=NAMED_NULL |
-	cl=Configurable_Literal;
+	| nn=NAMED_NULL
+	| cl=Configurable_Literal;
 
 predicateName:
 	prediri=IRIBOL
 	| PredName=VARORPREDNAME;
 
 listOfTerms:
-	t+=Term
-	(COMMA t+=Term)*;
+	trms+=Term
+	(COMMA trms+=Term)*;
 
 NegativeLiteral:
-	TILDE predicatename=predicateName LPAREN terms=listOfTerms RPAREN;
+	TILDE predname=predicateName LPAREN trms=listOfTerms RPAREN;
 
 Fact:
-	predicatename=predicateName LPAREN terms=listOfTerms RPAREN;
+	predname=predicateName LPAREN trms=listOfTerms RPAREN DOT;
 
 PositiveLiteral:
-	predicatename=predicateName LPAREN terms=listOfTerms RPAREN;
+	predname=predicateName LPAREN trms=listOfTerms RPAREN;
 
 Literal:
 	PositiveLiteral
@@ -78,54 +72,71 @@ listOfLiterals:
 	(COMMA l+=Literal)*;
 
 listOfPositiveLiterals:
-	l+=PositiveLiteral
-	(COMMA l+=PositiveLiteral)*;
+	pls+=PositiveLiteral
+	(COMMA pls+=PositiveLiteral)*;
 
 Rule:
 	head=listOfPositiveLiterals ARROW body=listOfLiterals DOT;
 
 Statement:
-	statement+=Rule
-	| statement+=Fact DOT;
+	rule=Rule
+	| fact=Fact
+	| directive=Directive;
+
+Striing:
+	st1=STRING_LITERAL1
+	| st2=STRING_LITERAL2
+	| stl1=STRING_LITERAL_LONG1
+	| stl2=STRING_LITERAL_LONG2;
+
+Directive:
+	directiveName=DIRECTIVENAME arguments=Arguments DOT;
+
+RulenoDot:
+	head=listOfPositiveLiterals ARROW body=listOfLiterals;
 
 DataSource:
-	(sourceName=DIRECTIVENAME | sourceName=VARORPREDNAME) LPAREN arg=Arguments RPAREN;
-
-Source:
-	SRC predicatename=predicateName arity=ARITY COLON dataSource=DataSource DOT;
-
+	pl=PositiveLiteral;
+	//(sourceName=DIRECTIVENAME | sourceName=VARORPREDNAME) LPAREN arg=Arguments RPAREN;
 Prefix:
-	PRFX t=COLON iriString=IRIREF DOT
-	| PRFX t=PNAME_NS iriString=IRIREF DOT;
+//PRFX t=COLON iriString=IRIREF DOT|
+	PRFX prefixName=PNAME_NS iriString=IRIREF DOT;
 
 Base:
 	BS iriString=IRIREF DOT;
 
+Source:
+	SRC predname=predicateName arity=ARITY COLON pl+=PositiveLiteral DOT;
+
 Configurable_Literal:
-	t=PIPE_DELIMITED_LITERAL | t=HASH_DELIMITED_LITERAL |
-	//s=parenDelimitedLiteral|
-	s=braceDelimitedLiteral |
-	s=bracketDelimitedLiteral;
+	pdl=PIPE_DELIMITED_LITERAL | hdl=HASH_DELIMITED_LITERAL |
+	//paren=parenDelimitedLiteral | 
+	bdl1=braceDelimitedLiteral | bdl2=bracketDelimitedLiteral;
 
 	//parenDelimitedLiteral:
-//{parenDelimitedLiteral} LPAREN (sb+=parenDelimitedLiteralBody)* RPAREN;
+//{parenDelimitedLiteral} LPAREN (pdlb+=parenDelimitedLiteralBody)* RPAREN;
 
 //parenDelimitedLiteralBody:
-//s=UNPAREN;
+//{parenDelimitedLiteralBody} (un=UNPAREN | LPAREN pdlb+=parenDelimitedLiteralBody RPAREN);
+
 braceDelimitedLiteral:
-	{braceDelimitedLiteral} '{' (sb+=braceDelimitedLiteralBody)* '}';
+	{braceDelimitedLiteral} '{' (bdlp+=braceDelimitedLiteralBody)* '}';
 
 braceDelimitedLiteralBody:
-	s=UNBRACE;
+	{braceDelimitedLiteralBody} (ub=UNBRACE | '{' bdlb+=braceDelimitedLiteralBody '}');
 
 bracketDelimitedLiteral:
-	{bracketDelimitedLiteral} '[' (sb+=bracketDelimitedLiteralBody)* ']';
+	{bracketDelimitedLiteral} '[' (bdlb+=bracketDelimitedLiteralBody)* ']';
 
 bracketDelimitedLiteralBody:
-	s=UNBRACKET;
+	{bracketDelimitedLiteralBody} (ub=UNBRACKET | '[' bdlb+=bracketDelimitedLiteralBody ']');
 
 Arguments:
-	{Arguments} (str+=Striing | str+=IRIBOL | t+=Term) (COMMA s=Arguments);
+	{Arguments} (rulenodot=RulenoDot | positiveliteral=PositiveLiteral | t=Term) (COMMA arguments=Arguments);
+
+Command:
+	directiveName=DIRECTIVENAME (predicatename=predicateName arity=ARITY DOT | predicatename=predicateName arity=ARITY
+	COLON arguments=Arguments DOT | arguments=Arguments DOT | prefixedName=PNAME_NS arguments=Arguments DOT | DOT);
 
 terminal ARITY:
 	"[" INTEGER "]";
@@ -139,33 +150,26 @@ terminal BS:
 terminal SRC:
 	"@source";
 
-terminal LOADCSV:
-	"load-csv";
-
-terminal LOADRDF:
-	"load-rdf";
-
-terminal SPARQL:
-	"sparql";
-
 terminal NAMED_NULL:
 	"_:" (PN_CHARS_U | ("0".."9")) ((PN_CHARS | ".")* PN_CHARS)?;
 
 terminal INTEGER:
-	("-"
-	| "+")? DIGITS;
+	SIGN DIGITS;
 
 terminal DECIMAL:
-	("-" | "+")? ((DIGITS)+ "." (DIGITS)* | "." (DIGITS)+);
+	SIGN (DIGITS "." (DIGITS)* | "." DIGITS);
 
 terminal DOUBLE:
-	("+" | "-")? (('0'..'9')+ "." ("0".."9")* EXPONENT | "." ("0".."9")+ (EXPONENT) | ("0".."9")+ EXPONENT);
+	SIGN (DIGITS "." ("0".."9")* EXPONENT | "." DIGITS EXPONENT | DIGITS EXPONENT);
 
 terminal DIGITS:
 	("0".."9")+;
 
 terminal EXPONENT:
 	("e" | "E") ("+" | "-")? ("0".."9")+;
+
+terminal SIGN:
+	("+" | "-")?;
 
 terminal SKIP:
 	" "
@@ -181,12 +185,13 @@ terminal UNBRACKET:
 	'[' (!('[' | ']'))+ ']';
 
 	//terminal UNPAREN:
-//LPAREN ( !(LPAREN | RPAREN))+ RPAREN;
+//'(' (!('(' | ')'))+ ')';
+
 terminal PIPE_DELIMITED_LITERAL:
-	'|' (!"|")* '|';
+	PIPE_DELIMITED (!"|")* PIPE_DELIMITED;
 
 terminal HASH_DELIMITED_LITERAL:
-	'#' (!"#")* '#';
+	HASH_DELIMITED (!"#")* HASH_DELIMITED;
 
 terminal STRING_LITERAL1:
 // Single quoted string
@@ -207,6 +212,24 @@ terminal ECHAR:
 	"\\" ("t" | "b" | "n" | "r" |
 	"f" | "\\" | "\"" | "'");
 
+terminal SINGLE_QUOTED:
+	"'";
+
+terminal DOUBLE_QUOTED:
+	"\"";
+
+terminal TRIPLE_QUOTED:
+	"'''";
+
+terminal SIXFOLD_QUOTED:
+	"\"\"\"";
+
+terminal PIPE_DELIMITED:
+	"|";
+
+terminal HASH_DELIMITED:
+	"#";
+
 terminal IRI:
 	'<' (!('>' | '<' | '\"' | '{' | '}' | '^' | '\\' | '|' | '`' | ('\u0000'..'\u0020')))* '>';
 
@@ -225,10 +248,10 @@ terminal EXIVAR:
 
 terminal LANGTAG:
 	AT (A2Z)+
-	("-" (A2ZN)+)*;
+	("-" (A2ZN)+)?;
 
 terminal VARORPREDNAME:
-	A2Z (A2ZN)*;
+	A2Z (A2ZNX)*;
 
 terminal A2Z:
 	("a".."z" | "A".."Z");

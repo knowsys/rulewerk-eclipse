@@ -27,7 +27,6 @@ import java.util.HashSet;
 
 import org.eclipse.xtext.validation.Check;
 
-import rls4eclipse.rLS.Fact;
 import rls4eclipse.rLS.Literal;
 import rls4eclipse.rLS.PositiveLiteral;
 import rls4eclipse.rLS.RLSPackage;
@@ -46,12 +45,12 @@ public class RLSValidator extends AbstractRLSValidator {
 	public void checkUniVars(Rule rule) {
 		HashSet<String> a = new HashSet<String>();
 		for (Literal l : rule.getBody().getL()) {
-			for (Term f : l.getTerms().getT()) {
+			for (Term f : l.getTrms().getTrms()) {
 				a.add(f.getUv());
 			}
 		}
-		for (PositiveLiteral x : rule.getHead().getL()) {
-			for (Term t : x.getTerms().getT()) {
+		for (PositiveLiteral x : rule.getHead().getPls()) {
+			for (Term t : x.getTrms().getTrms()) {
 				if (!a.contains(t.getUv()) && (!t.getUv().isEmpty())) {
 					error("every universal variable in the head of the rule must also be in the body of the rule",
 							rule.eClass().getEStructuralFeature(RLSPackage.RULE));
@@ -65,12 +64,12 @@ public class RLSValidator extends AbstractRLSValidator {
 	public void checkMalformedRule(Rule rule) {
 		HashSet<String> a = new HashSet<String>();
 		for (Literal l : rule.getBody().getL()) {
-			for (Term f : l.getTerms().getT()) {
+			for (Term f : l.getTrms().getTrms()) {
 				a.add(f.getUv().replace("?", ""));
 			}
 		}
-		for (PositiveLiteral x : rule.getHead().getL()) {
-			for (Term t : x.getTerms().getT()) {
+		for (PositiveLiteral x : rule.getHead().getPls()) {
+			for (Term t : x.getTrms().getTrms()) {
 				String s = t.getEv().replace("!", "");
 				if (a.contains(s)) {
 					error("Variable that is existentially quantified in the head cannot be universally quantified in the body of the rule",
@@ -84,7 +83,7 @@ public class RLSValidator extends AbstractRLSValidator {
 	@Check
 	public void checkExiVars(Rule rule) {
 		for (Literal l : rule.getBody().getL()) {
-			for (Term f : l.getTerms().getT()) {
+			for (Term f : l.getTrms().getTrms()) {
 				if (!f.getEv().isEmpty()) {
 					error("Existentialy quantified variables can not appear in the body of the rule",
 							rule.eClass().getEStructuralFeature(RLSPackage.RULE));
