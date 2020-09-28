@@ -73,7 +73,7 @@ public class CLHighlightingConfiguration extends DefaultHighlightingConfiguratio
 
 	public TextStyle PnameIdTextStyle() {
 		TextStyle textStyle = defaultTextStyle().copy();
-		textStyle.setColor(new RGB(255, 128, 0)); // dark blue
+		//textStyle.setColor(new RGB(255, 128, 0)); // dark blue
 		// textStyle.setStyle(SWT.BOLD);
 		return textStyle;
 	}
@@ -121,7 +121,7 @@ public class CLHighlightingConfiguration extends DefaultHighlightingConfiguratio
 
 	public TextStyle varIdTextStyle() {
 		TextStyle textStyle = defaultTextStyle().copy();
-		textStyle.setColor(new RGB(220,20,60)); // purple
+		textStyle.setColor(new RGB(63, 127, 95)); // purple
 		// textStyle.setStyle(SWT.BOLD);
 		return textStyle;
 	}
@@ -135,7 +135,7 @@ public class CLHighlightingConfiguration extends DefaultHighlightingConfiguratio
 
 	public TextStyle iriStringTextStyle() {
 		TextStyle textStyle = defaultTextStyle().copy();
-		textStyle.setColor(new RGB(139,0,139));
+		textStyle.setColor(new RGB(84, 6, 58));
 		return textStyle;
 	}
 

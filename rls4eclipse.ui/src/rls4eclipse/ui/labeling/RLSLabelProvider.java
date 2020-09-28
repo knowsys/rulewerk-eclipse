@@ -3,6 +3,9 @@
  */
 package rls4eclipse.ui.labeling;
 
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
+
 /*-
  * #%L
  * rls4eclipse.ui
@@ -25,17 +28,24 @@ package rls4eclipse.ui.labeling;
 
 import com.google.inject.Inject;
 
+import rls4eclipse.rLS.AR;
+import rls4eclipse.rLS.Arguments;
+import rls4eclipse.rLS.IRIBOL;
 import rls4eclipse.rLS.Literal;
 import rls4eclipse.rLS.NegativeLiteral;
+import rls4eclipse.rLS.NumericLiteral;
 import rls4eclipse.rLS.PositiveLiteral;
+import rls4eclipse.rLS.Prefix;
+import rls4eclipse.rLS.PrefixedName;
+import rls4eclipse.rLS.RDFLiteral;
 import rls4eclipse.rLS.Rule;
+import rls4eclipse.rLS.Source;
 import rls4eclipse.rLS.Statement;
+import rls4eclipse.rLS.Striing;
+import rls4eclipse.rLS.Term;
 import rls4eclipse.rLS.listOfLiterals;
 import rls4eclipse.rLS.listOfPositiveLiterals;
 import rls4eclipse.rLS.listOfTerms;
-
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
 
 /**
  * Provides labels for EObjects.
@@ -80,8 +90,53 @@ public class RLSLabelProvider extends DefaultEObjectLabelProvider {
 	String text(listOfTerms s) {
 		return "Terms";
 	}
+	
+	String text(Term t) {
+		return "Term";
+	}
+	
+	String text(Arguments a) {
+		return "Arguments";
+	}
+	
+	String text(Source s) {
+		return "Source";
+	}
+	
+	String text(Prefix p) {
+		return "Prefix";
+	}
+	
+	String text(PrefixedName pn) {
+		return "Prefixed name";
+	}
+	
+	String text(AR ar) {
+		return "Arity";
+	}
+	
+	String text(Striing st) {
+		return "String";
+	}
+	
+	String text(RDFLiteral rd) {
+		return "RDFLiteral";
+	}
+	
+	String text(IRIBOL iri) {
+		return "IRI";
+	}
+	
+	String text(NumericLiteral nl) {
+		return "NumericLiteral";
+	}
+
+	
+	
+	
 //
 //	String image(Greeting ele) {
 //		return "Greeting.gif";
 //	}
+
 }

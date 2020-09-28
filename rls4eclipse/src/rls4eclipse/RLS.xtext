@@ -108,7 +108,7 @@ Base:
 	BS iriString=IRIREF DOT;
 
 Source:
-	SRC predname=predicateName arity=ARITY COLON pl+=PositiveLiteral DOT;
+	SRC predname=predicateName arity=AR COLON pl+=PositiveLiteral DOT;
 
 Configurable_Literal:
 	pdl=PIPE_DELIMITED_LITERAL | hdl=HASH_DELIMITED_LITERAL |
@@ -137,9 +137,10 @@ Arguments:
 	{Arguments} (rulenodot=RulenoDot | positiveliteral=PositiveLiteral | t=Term) (COMMA arguments=Arguments)?;
 
 Command:
-	directiveName=DIRECTIVENAME (predicatename=predicateName arity=ARITY DOT | predicatename=predicateName arity=ARITY
+	directiveName=DIRECTIVENAME (predicatename=predicateName arity=AR DOT | predicatename=predicateName arity=AR
 	COLON arguments=Arguments DOT | arguments=Arguments DOT | prefixedName=PNAME_NS arguments=Arguments DOT | DOT);
 
+AR: ar=ARITY;
 terminal ARITY:
 	"[" INTEGER "]";
 
