@@ -23,13 +23,11 @@ IRIREF:
 IRIBOL:
 	iri=IRIREF | iri=PrefixedName;
 
-Langtagg:
-	l=LANGTAG;
 
 RDFLiteral:
 	s=Striing
-	(l=Langtagg
-	| DATATYPE iri=IRIBOL)?;
+	(l=LANGTAG|
+	 DATATYPE iri=IRIBOL)?;
 
 NumericLiteral:
 	int=INTEGER
@@ -132,7 +130,7 @@ bracketDelimitedLiteralBody:
 	{bracketDelimitedLiteralBody} (ub=UNBRACKET | '[' bdlb+=bracketDelimitedLiteralBody ']');
 
 Arguments:
-	{Arguments} (rulenodot=RulenoDot | positiveliteral=PositiveLiteral | t=Term) (COMMA arguments=Arguments);
+	{Arguments} (rulenodot=RulenoDot | positiveliteral=PositiveLiteral | t=Term) (COMMA arguments=Arguments)?;
 
 Command:
 	directiveName=DIRECTIVENAME (predicatename=predicateName arity=ARITY DOT | predicatename=predicateName arity=ARITY
@@ -212,18 +210,6 @@ terminal ECHAR:
 	"\\" ("t" | "b" | "n" | "r" |
 	"f" | "\\" | "\"" | "'");
 
-terminal SINGLE_QUOTED:
-	"'";
-
-terminal DOUBLE_QUOTED:
-	"\"";
-
-terminal TRIPLE_QUOTED:
-	"'''";
-
-terminal SIXFOLD_QUOTED:
-	"\"\"\"";
-
 terminal PIPE_DELIMITED:
 	"|";
 
@@ -245,25 +231,28 @@ terminal UNIVAR:
 
 terminal EXIVAR:
 	EMARK VARORPREDNAME;
-
-terminal LANGTAG:
-	AT (A2Z)+
-	("-" (A2ZN)+)?;
+	
+terminal DIRECTIVENAME:
+	AT VARORPREDNAME;		
 
 terminal VARORPREDNAME:
-	A2Z (A2ZNX)*;
+	A2Z (A2ZN | "-" | "_")*;
+	
+
+
+terminal LANGTAG:
+	AT (A2Z)*
+	("-" (A2ZN)+)?;
 
 terminal A2Z:
 	("a".."z" | "A".."Z");
 
+
+	//terminal A2ZNX:
+//("a".."z" | "A".."Z" | "0".."9" | "-" | "_");
+
 terminal A2ZN:
 	("a".."z" | "A".."Z" | "0".."9");
-
-terminal DIRECTIVENAME:
-	(AT "a".."z" | "A".."Z") ("a".."z" | "A".."Z" | "0".."9" | "-" | "_")*;
-
-terminal A2ZNX:
-	("a".."z" | "A".."Z" | "0".."9" | "-" | "_");
 
 terminal LPAREN:
 	"(";
@@ -315,7 +304,4 @@ terminal PN_PREFIX:
 
 terminal PN_LOCAL:
 	(PN_CHARS_U | ":" | ("0".."9")) ((PN_CHARS | "." | ":")* PN_CHARS)?;
-
-terminal NOT:
-	'!';
 
