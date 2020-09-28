@@ -1,7 +1,5 @@
 package rls4eclipse.ui.syntaxhighlighting;
 
-import org.eclipse.core.commands.Command;
-
 /*-
  * #%L
  * rulewerk.ui
@@ -32,10 +30,7 @@ import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.util.CancelIndicator;
 
-import rls4eclipse.rLS.Source;
-
 public class SemanticHighlightingCalculator extends DefaultSemanticHighlightingCalculator {
-
 	@Override
 	public void provideHighlightingFor(XtextResource resource, IHighlightedPositionAcceptor acceptor,
 			CancelIndicator cancelIndicator) {
@@ -56,21 +51,32 @@ public class SemanticHighlightingCalculator extends DefaultSemanticHighlightingC
 					acceptor.addPosition(offset, length, CLHighlightingConfiguration.Prefix_ID);
 				} else if (name.equals("PRFX")) {
 					acceptor.addPosition(offset, length, CLHighlightingConfiguration.Source_ID);
+				} else if (name.equals("DIRECTIVENAME")) {
+					acceptor.addPosition(offset, length, CLHighlightingConfiguration.Source_ID);
 				} else if (name.equals("PrefixedName")) {
 					acceptor.addPosition(offset, length, CLHighlightingConfiguration.Pname_ID);
-				} else if (name.equals("COMMA") || r.getName().equals("DOT")) {
+				} 
+				else if (name.equals("PNAME_NS")) {
+					acceptor.addPosition(offset, length, CLHighlightingConfiguration.PnameNS_ID);
+				} 
+				else if (r.getName().equals("DOT")) {
 					acceptor.addPosition(offset, length, CLHighlightingConfiguration.Comma_ID);
 				} else if (name.equals("BS")) {
 					acceptor.addPosition(offset, length, CLHighlightingConfiguration.Source_ID);
-				} else if (name.equals("ARROW") || r.getName().equals("COMMA") || r.getName().equals("TILDE")) {
-					acceptor.addPosition(offset, length, CLHighlightingConfiguration.Arrow_ID);
+				} else if (name.equals("ARROW") || r.getName().equals("COM") || r.getName().equals("TILDE")) {
+					acceptor.addPosition(offset, length, CLHighlightingConfiguration.Comma_ID);
 				} else if (name.equals("UNIVAR")) {
 					acceptor.addPosition(offset, length, CLHighlightingConfiguration.UniVar_ID);
 				} else if (name.equals("IRIREF")) {
 					acceptor.addPosition(offset, length, CLHighlightingConfiguration.IRI_ID);
 				} else if (name.equals("Striing")) {
 					acceptor.addPosition(offset, length, CLHighlightingConfiguration.String_ID);
-				} else if (name.equals("EXIVAR")) {
+				} else if (name.equals("LANGTAG")) {
+					acceptor.addPosition(offset, length, CLHighlightingConfiguration.String_ID);
+				} else if (name.equals("NumericLiteral")) {
+					acceptor.addPosition(offset, length, CLHighlightingConfiguration.String_ID);
+				} 
+				else if (name.equals("EXIVAR")) {
 					acceptor.addPosition(offset, length, CLHighlightingConfiguration.ExiVar_ID);
 				} else if (name.equals("VARORPREDNAME")) {
 					RuleCall rr = (RuleCall) node.getParent().getGrammarElement();
@@ -80,7 +86,7 @@ public class SemanticHighlightingCalculator extends DefaultSemanticHighlightingC
 								CLHighlightingConfiguration.Predicate_ID);
 					} else {
 						acceptor.addPosition(node.getOffset(), node.getLength(),
-								CLHighlightingConfiguration.Constant_ID);
+								CLHighlightingConfiguration.String_ID);
 					}
 
 				}

@@ -33,6 +33,10 @@ NumericLiteral:
 	int=INTEGER
 	| dec=DECIMAL
 	| dbl=DOUBLE;
+	
+COM:COMMA;
+
+COM2:COMMA;	
 
 Term:
 	iri=IRIBOL
@@ -50,7 +54,7 @@ predicateName:
 
 listOfTerms:
 	trms+=Term
-	(COMMA trms+=Term)*;
+	(COM2 trms+=Term)*;
 
 NegativeLiteral:
 	TILDE predname=predicateName LPAREN trms=listOfTerms RPAREN;
@@ -67,11 +71,11 @@ Literal:
 
 listOfLiterals:
 	l+=Literal
-	(COMMA l+=Literal)*;
+	(COM l+=Literal)*;
 
 listOfPositiveLiterals:
 	pls+=PositiveLiteral
-	(COMMA pls+=PositiveLiteral)*;
+	(COM pls+=PositiveLiteral)*;
 
 Rule:
 	head=listOfPositiveLiterals ARROW body=listOfLiterals DOT;

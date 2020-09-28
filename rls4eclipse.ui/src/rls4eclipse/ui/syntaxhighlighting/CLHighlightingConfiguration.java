@@ -39,19 +39,20 @@ public class CLHighlightingConfiguration extends DefaultHighlightingConfiguratio
 	public static final String Constant_ID = "constant";
 	public static final String Comma_ID = "comma";
 	public static final String Pname_ID = "Prefixedname";
+	public static final String PnameNS_ID = "PNAME_NS";
 
 	@Override
 	public void configure(IHighlightingConfigurationAcceptor acceptor) { // semantic highlighting
 		acceptor.acceptDefaultHighlighting(Prefix_ID, "@prefix", //$NON-NLS-1$
-				attributeIdTextStyle());
+				quotedStringTextStyle());
 		acceptor.acceptDefaultHighlighting(Source_ID, "@source", //$NON-NLS-1$
-				attributeIdTextStyle());
+				quotedStringTextStyle());
 		acceptor.acceptDefaultHighlighting(Arrow_ID, "arrow", //$NON-NLS-1$
 				arrowTextStyle());
 		acceptor.acceptDefaultHighlighting(Comment_ID, "comment", //$NON-NLS-1$
 				portIdTextStyle());
 		acceptor.acceptDefaultHighlighting(UniVar_ID, "univar", //$NON-NLS-1$
-				quotedStringTextStyle());
+				var2IdTextStyle());
 		acceptor.acceptDefaultHighlighting(ExiVar_ID, "var", //$NON-NLS-1$
 				varIdTextStyle());
 		acceptor.acceptDefaultHighlighting(IRI_ID, "iri", //$NON-NLS-1$
@@ -66,11 +67,20 @@ public class CLHighlightingConfiguration extends DefaultHighlightingConfiguratio
 				CommaTextStyle());
 		acceptor.acceptDefaultHighlighting(Pname_ID, "Prefixedname", //$NON-NLS-1$
 				PnameIdTextStyle());
+		acceptor.acceptDefaultHighlighting(PnameNS_ID, "PNAME_NS", //$NON-NLS-1$
+				PnsIdTextStyle());
 	}
 
 	public TextStyle PnameIdTextStyle() {
 		TextStyle textStyle = defaultTextStyle().copy();
 		textStyle.setColor(new RGB(255, 128, 0)); // dark blue
+		// textStyle.setStyle(SWT.BOLD);
+		return textStyle;
+	}
+
+	public TextStyle PnsIdTextStyle() {
+		TextStyle textStyle = defaultTextStyle().copy();
+		textStyle.setColor(new RGB(0,0,205)); // dark blue
 		textStyle.setStyle(SWT.BOLD);
 		return textStyle;
 	}
@@ -91,7 +101,7 @@ public class CLHighlightingConfiguration extends DefaultHighlightingConfiguratio
 
 	public TextStyle quotedStringTextStyle() {
 		TextStyle textStyle = defaultTextStyle().copy();
-		textStyle.setColor(new RGB(153, 0, 153));
+		textStyle.setColor(new RGB(128, 0, 128));
 		textStyle.setStyle(SWT.BOLD);
 		return textStyle;
 	}
@@ -105,27 +115,27 @@ public class CLHighlightingConfiguration extends DefaultHighlightingConfiguratio
 
 	public TextStyle portIdTextStyle() {
 		TextStyle textStyle = defaultTextStyle().copy();
-		textStyle.setColor(new RGB(0, 153, 76)); // light green
+		textStyle.setColor(new RGB(34, 139, 34)); // light green
 		return textStyle;
 	}
 
 	public TextStyle varIdTextStyle() {
 		TextStyle textStyle = defaultTextStyle().copy();
-		textStyle.setColor(new RGB(0, 204, 0)); // purple
-		textStyle.setStyle(SWT.BOLD);
+		textStyle.setColor(new RGB(220,20,60)); // purple
+		// textStyle.setStyle(SWT.BOLD);
 		return textStyle;
 	}
 
 	public TextStyle var2IdTextStyle() {
 		TextStyle textStyle = defaultTextStyle().copy();
-		textStyle.setColor(new RGB(0, 153, 153));
-		textStyle.setStyle(SWT.BOLD);
+		textStyle.setColor(new RGB(165, 42, 42));
+		// textStyle.setStyle(SWT.BOLD);
 		return textStyle;
 	}
 
 	public TextStyle iriStringTextStyle() {
 		TextStyle textStyle = defaultTextStyle().copy();
-		textStyle.setColor(new RGB(0, 153, 153));
+		textStyle.setColor(new RGB(139,0,139));
 		return textStyle;
 	}
 
@@ -144,7 +154,7 @@ public class CLHighlightingConfiguration extends DefaultHighlightingConfiguratio
 	public TextStyle ConstantTextStyle() {
 		TextStyle textStyle = defaultTextStyle().copy();
 		textStyle.setColor(new RGB(0, 128, 255));
-		textStyle.setStyle(SWT.BOLD);
+		//textStyle.setStyle(SWT.BOLD);
 		return textStyle;
 	}
 }
