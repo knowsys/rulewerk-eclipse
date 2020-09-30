@@ -46,11 +46,13 @@ import rls4eclipse.rLS.Term;
 import rls4eclipse.rLS.listOfLiterals;
 import rls4eclipse.rLS.listOfPositiveLiterals;
 import rls4eclipse.rLS.listOfTerms;
+//import rls4eclipse.rLS.UNIVAR;
 
 /**
  * Provides labels for EObjects.
  * 
- * See https://www.eclipse.org/Xtext/documentation/310_eclipse_support.html#label-provider
+ * See
+ * https://www.eclipse.org/Xtext/documentation/310_eclipse_support.html#label-provider
  */
 public class RLSLabelProvider extends DefaultEObjectLabelProvider {
 
@@ -62,78 +64,75 @@ public class RLSLabelProvider extends DefaultEObjectLabelProvider {
 	String text(Rule r) {
 		return "Rule";
 	}
-	
+
 	String text(Statement s) {
 		return "Statement";
 	}
-	
+
 	String text(listOfPositiveLiterals h) {
 		return "Head";
 	}
-	
+
 	String text(listOfLiterals s) {
 		return "Body";
 	}
-	
+
 	String text(Literal s) {
 		return "Predicate name";
 	}
-	
+
 	String text(PositiveLiteral s) {
 		return "Positive Literal";
 	}
-	
+
 	String text(NegativeLiteral s) {
 		return "Negative Literal";
 	}
-	
+
 	String text(listOfTerms s) {
 		return "Terms";
 	}
-	
+
 	String text(Term t) {
 		return "Term";
 	}
-	
+
 	String text(Arguments a) {
 		return "Arguments";
 	}
-	
+
 	String text(Source s) {
 		return "Source";
 	}
-	
+
 	String text(Prefix p) {
 		return "Prefix";
 	}
-	
+
 	String text(PrefixedName pn) {
 		return "Prefixed name";
 	}
-	
+
 	String text(AR ar) {
 		return "Arity";
 	}
-	
+
 	String text(Striing st) {
 		return "String";
 	}
-	
+
 	String text(RDFLiteral rd) {
 		return "RDFLiteral";
 	}
-	
+
 	String text(IRIBOL iri) {
 		return "IRI";
 	}
-	
+
 	String text(NumericLiteral nl) {
 		return "NumericLiteral";
 	}
 
-	
-	
-	
 //
 //	String image(Greeting ele) {
 //		return "Greeting.gif";

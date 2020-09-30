@@ -23,20 +23,21 @@ IRIREF:
 IRIBOL:
 	iri=IRIREF | iri=PrefixedName;
 
-
 RDFLiteral:
 	s=Striing
-	(l=LANGTAG|
-	 DATATYPE iri=IRIBOL)?;
+	(l=LANGTAG |
+	DATATYPE iri=IRIBOL)?;
 
 NumericLiteral:
 	int=INTEGER
 	| dec=DECIMAL
 	| dbl=DOUBLE;
-	
-COM:COMMA;
 
-COM2:COMMA;	
+COM:
+	COMMA;
+
+COM2:
+	COMMA;
 
 Term:
 	iri=IRIBOL
@@ -137,10 +138,12 @@ Arguments:
 	{Arguments} (rulenodot=RulenoDot | positiveliteral=PositiveLiteral | t=Term) (COMMA arguments=Arguments)?;
 
 Command:
-	directiveName=DIRECTIVENAME (predicatename=predicateName arity=AR DOT | predicatename=predicateName arity=AR
-	COLON arguments=Arguments DOT | arguments=Arguments DOT | prefixedName=PNAME_NS arguments=Arguments DOT | DOT);
+	directiveName=DIRECTIVENAME (predicatename=predicateName arity=AR DOT | predicatename=predicateName arity=AR COLON
+	arguments=Arguments DOT | arguments=Arguments DOT | prefixedName=PNAME_NS arguments=Arguments DOT | DOT);
 
-AR: ar=ARITY;
+AR:
+	ar=ARITY;
+
 terminal ARITY:
 	"[" INTEGER "]";
 
@@ -152,6 +155,12 @@ terminal BS:
 
 terminal SRC:
 	"@source";
+
+terminal UNIVAR:
+	QMARK VARORPREDNAME;
+
+terminal EXIVAR:
+	EMARK VARORPREDNAME;
 
 terminal NAMED_NULL:
 	"_:" (PN_CHARS_U | ("0".."9")) ((PN_CHARS | ".")* PN_CHARS)?;
@@ -231,19 +240,11 @@ terminal PNAME_NS:
 	PN_PREFIX
 	":";
 
-terminal UNIVAR:
-	QMARK VARORPREDNAME;
-
-terminal EXIVAR:
-	EMARK VARORPREDNAME;
-	
 terminal DIRECTIVENAME:
-	AT VARORPREDNAME;		
+	AT VARORPREDNAME;
 
 terminal VARORPREDNAME:
 	A2Z (A2ZN | "-" | "_")*;
-	
-
 
 terminal LANGTAG:
 	AT (A2Z)*
@@ -251,7 +252,6 @@ terminal LANGTAG:
 
 terminal A2Z:
 	("a".."z" | "A".."Z");
-
 
 	//terminal A2ZNX:
 //("a".."z" | "A".."Z" | "0".."9" | "-" | "_");

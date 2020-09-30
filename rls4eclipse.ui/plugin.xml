@@ -80,7 +80,7 @@
 		<page
 			class="rls4eclipse.ui.RLSExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
 			id="rls4eclipse.RLS"
-			name="RLS">
+			name="RuleWerk">
 			<keywordReference id="rls4eclipse.ui.keyword_RLS"/>
 		</page>
 		<page
@@ -103,7 +103,7 @@
 		<page
 			class="rls4eclipse.ui.RLSExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
 			id="rls4eclipse.RLS"
-			name="RLS">
+			name="RuleWerk">
 			<keywordReference id="rls4eclipse.ui.keyword_RLS"/>
 			<enabledWhen>
 				<adapt type="org.eclipse.core.resources.IProject"/>
