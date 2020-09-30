@@ -153,7 +153,7 @@ public class CLHighlightingConfiguration extends DefaultHighlightingConfiguratio
 
 	public TextStyle ConstantTextStyle() {
 		TextStyle textStyle = defaultTextStyle().copy();
-		textStyle.setColor(new RGB(0, 128, 255));
+		textStyle.setColor(new RGB(42, 0, 255));
 		//textStyle.setStyle(SWT.BOLD);
 		return textStyle;
 	}
