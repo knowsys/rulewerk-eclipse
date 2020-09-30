@@ -115,7 +115,7 @@ public class CLHighlightingConfiguration extends DefaultHighlightingConfiguratio
 
 	public TextStyle portIdTextStyle() {
 		TextStyle textStyle = defaultTextStyle().copy();
-		textStyle.setColor(new RGB(34, 139, 34)); // light green
+		textStyle.setColor(new RGB(63, 127, 95)); // light green
 		return textStyle;
 	}
 
