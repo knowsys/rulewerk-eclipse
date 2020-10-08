@@ -480,22 +480,4 @@
           parentCategory="org.eclipse.ui.Basic">
     </category>
  </extension>
- <extension
-       point="org.eclipse.ui.perspectiveExtensions">
-    <perspectiveExtension
-          targetID="*">
-       <newWizardShortcut
-             id="rls4eclipse.ui.wizards.SampleNewWizard">
-       </newWizardShortcut>
-    </perspectiveExtension>
-    <perspectiveExtension
-          targetID="org.eclipse.ui.resourcePerspective">
-       <view
-             id="com.example.test"
-             ratio="0.5"
-             relationship="stack"
-             relative="org.eclipse.ui.navigator.ProjectExplorer">
-       </view>
-    </perspectiveExtension>
- </extension>
 </plugin>
