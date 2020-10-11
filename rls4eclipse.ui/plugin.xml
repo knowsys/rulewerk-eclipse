@@ -138,7 +138,7 @@
 			name="Copy Qualified Name">
 	</command>
  <command
-       defaultHandler="CreateFileHandler"
+       defaultHandler="rls4eclipse.ui.handlers.CreateFileHandler"
        id="rls4eclipse.ui.createRlsFile"
        name="Rls file">
  </command>
@@ -443,7 +443,7 @@
        <command
              commandId="rls4eclipse.ui.createRlsFile"
              id="rls_creator"
-             label="Create Rls file"
+             label="Rulewerk file"
              style="push">
           <visibleWhen
                 checkEnabled="false">
@@ -455,7 +455,7 @@
        <command
              commandId="rls4eclipse.ui.createRlsFile"
              id="rls_creator"
-             label="Create Rls file"
+             label="Rulewerk file"
              style="push">
           <visibleWhen
                 checkEnabled="false">
@@ -479,5 +479,12 @@
           name="rls"
           parentCategory="org.eclipse.ui.Basic">
     </category>
+ </extension>
+ <extension
+       point="org.eclipse.ui.commandImages">
+    <image
+          commandId="rls4eclipse.ui.createRlsFile"
+          icon="icons/sample.png">
+    </image>
  </extension>
 </plugin>

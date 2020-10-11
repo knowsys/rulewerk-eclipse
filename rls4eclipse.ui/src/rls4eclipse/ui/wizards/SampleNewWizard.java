@@ -113,7 +113,7 @@ public class SampleNewWizard extends Wizard  implements INewWizard {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IResource resource = root.findMember(new Path(containerName));
 		if (!resource.exists() || !(resource instanceof IContainer)) {
-			throwCoreException("Container \"" + containerName + "\" does not exist.");
+			throwCoreException("Folder \"" + containerName + "\" does not exist.");
 		}
 		IContainer container = (IContainer) resource;
 		final IFile file = container.getFile(new Path(fileName));
@@ -146,7 +146,7 @@ public class SampleNewWizard extends Wizard  implements INewWizard {
 
 	private InputStream openContentStream() {
 		String contents =
-			"This is the initial file contents for *.rls file that should be word-sorted in the Preview page of the multi-page editor";
+			"";
 		return new ByteArrayInputStream(contents.getBytes());
 	}
 

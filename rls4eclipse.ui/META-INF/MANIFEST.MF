@@ -20,7 +20,9 @@ Require-Bundle: rls4eclipse,
  org.eclipse.core.runtime,
  org.eclipse.ui.navigator,
  org.eclipse.ui.navigator.resources
-Import-Package: org.apache.log4j
+Import-Package: org.apache.log4j,
+ org.eclipse.jdt.core,
+ org.eclipse.jdt.internal.core
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: rls4eclipse.ui,
  rls4eclipse.ui.contentassist,
