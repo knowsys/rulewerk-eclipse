@@ -468,7 +468,6 @@
     <wizard
           category="rls4eclipse.ui"
           class="rls4eclipse.ui.wizards.SampleNewWizard"
-          finalPerspective="org.eclipse.ui.resourcePerspective"
           icon="icons/sample.png"
           id="rls4eclipse.ui.wizards.SampleNewWizard"
           name="rls file"
@@ -484,6 +483,8 @@
        point="org.eclipse.ui.commandImages">
     <image
           commandId="rls4eclipse.ui.createRlsFile"
+          disabledIcon="icons/sample.png"
+          hoverIcon="icons/sample.png"
           icon="icons/sample.png">
     </image>
  </extension>

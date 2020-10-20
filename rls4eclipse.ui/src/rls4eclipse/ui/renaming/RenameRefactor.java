@@ -34,7 +34,9 @@ import org.eclipse.xtext.ui.refactoring.IRefactoringUpdateAcceptor;
 import org.eclipse.xtext.ui.refactoring.impl.DefaultRenameStrategy;
 import org.eclipse.xtext.ui.refactoring.impl.RefactoringException;
 import org.eclipse.xtext.ui.refactoring.ui.IRenameElementContext;
+
 import com.google.inject.Inject;
+
 import rls4eclipse.rLS.Term;
 import rls4eclipse.rLS.predicateName;
 

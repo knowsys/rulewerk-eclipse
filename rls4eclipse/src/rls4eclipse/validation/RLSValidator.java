@@ -40,6 +40,7 @@ import rls4eclipse.rLS.Term;
  * https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 public class RLSValidator extends AbstractRLSValidator {
+	
 
 	@Check
 	public void checkUniVars(Rule rule) {
@@ -54,6 +55,7 @@ public class RLSValidator extends AbstractRLSValidator {
 				if (!a.contains(t.getUv()) && (!t.getUv().isEmpty())) {
 					error("every universal variable in the head of the rule must also be in the body of the rule",
 							rule.eClass().getEStructuralFeature(RLSPackage.RULE));
+
 				}
 			}
 		}

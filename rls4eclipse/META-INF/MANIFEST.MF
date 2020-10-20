@@ -26,4 +26,5 @@ Export-Package: rls4eclipse.rLS.impl,
  rls4eclipse.serializer,
  rls4eclipse.parser.antlr,
  rls4eclipse.validation
-Import-Package: org.apache.log4j
+Import-Package: org.apache.log4j,
+ org.eclipse.core.resources
