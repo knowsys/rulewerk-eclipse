@@ -43,7 +43,6 @@ public class CreateFileHandler extends AbstractHandler {
 		WizardDialog dialog = new WizardDialog(activeShell, wizard);
 
 		dialog.open();
-
 		return null;
 	}
 

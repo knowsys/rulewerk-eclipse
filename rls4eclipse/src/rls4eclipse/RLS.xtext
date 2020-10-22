@@ -188,7 +188,10 @@ terminal SKIP:
 	| "\t"
 	| "\n"
 	| "\r"
-	| "\f" | '%' (!'\n')* '\n';
+	| "\f" | SL_COMMENT;
+
+terminal SL_COMMENT:
+	'%' (!'\n')* '\n';
 
 terminal UNBRACE:
 	'{' (!('{' | '}'))+ '}';
