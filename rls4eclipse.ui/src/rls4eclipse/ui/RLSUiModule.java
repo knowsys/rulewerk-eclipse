@@ -28,7 +28,11 @@ import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculat
 import org.eclipse.xtext.ui.editor.IXtextEditorCallback;
 import org.eclipse.xtext.ui.editor.IXtextEditorCallback.NullImpl;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
+import org.eclipse.xtext.ui.editor.validation.ValidatingEditorCallback;
 import org.eclipse.xtext.ui.refactoring.IRenameStrategy;
+
+import com.google.inject.Binder;
+import com.google.inject.name.Names;
 
 import rls4eclipse.ui.contentassist.AbstractRLSProposalProvider;
 import rls4eclipse.ui.contentassist.RLSProposalProvider;
@@ -39,6 +43,7 @@ import rls4eclipse.ui.syntaxhighlighting.SemanticHighlightingCalculator;
 /**
  * Use this class to register components to be used within the Eclipse IDE.
  */
+@SuppressWarnings("restriction")
 public class RLSUiModule extends AbstractRLSUiModule {
 
 	public RLSUiModule(AbstractUIPlugin plugin) {
@@ -67,6 +72,11 @@ public class RLSUiModule extends AbstractRLSUiModule {
 	@Override
 	public Class<? extends IRenameStrategy> bindIRenameStrategy() {
 		return RenameRefactor.class;
+	}
+	
+	public void configureMarkOccurrencesAction2(Binder binder) {
+		binder.bind(IXtextEditorCallback.class).annotatedWith(Names.named("RuleWerkValidation"))
+			.to(ValidatingEditorCallback.class);
 	}
 	
 	

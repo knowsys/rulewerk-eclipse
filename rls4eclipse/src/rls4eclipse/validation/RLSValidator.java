@@ -26,6 +26,7 @@ package rls4eclipse.validation;
 import java.util.HashSet;
 
 import org.eclipse.xtext.validation.Check;
+import org.eclipse.xtext.validation.CheckType;
 
 import rls4eclipse.rLS.Literal;
 import rls4eclipse.rLS.PositiveLiteral;
@@ -42,7 +43,7 @@ import rls4eclipse.rLS.Term;
 public class RLSValidator extends AbstractRLSValidator {
 	
 
-	@Check
+	@Check(CheckType.NORMAL)
 	public void checkUniVars(Rule rule) {
 		HashSet<String> a = new HashSet<String>();
 		for (Literal l : rule.getBody().getL()) {
@@ -54,7 +55,7 @@ public class RLSValidator extends AbstractRLSValidator {
 			for (Term t : x.getTrms().getTrms()) {
 				if (!a.contains(t.getUv()) && (!t.getUv().isEmpty())) {
 					error("every universal variable in the head of the rule must also be in the body of the rule",
-							rule.eClass().getEStructuralFeature(RLSPackage.RULE));
+							rule.eClass().getEStructuralFeature(RLSPackage.RULE),-1);
 
 				}
 			}
@@ -62,7 +63,7 @@ public class RLSValidator extends AbstractRLSValidator {
 
 	}
 
-	@Check
+	@Check(CheckType.NORMAL)
 	public void checkMalformedRule(Rule rule) {
 		HashSet<String> a = new HashSet<String>();
 		for (Literal l : rule.getBody().getL()) {
@@ -82,7 +83,7 @@ public class RLSValidator extends AbstractRLSValidator {
 
 	}
 
-	@Check
+	@Check(CheckType.NORMAL)
 	public void checkExiVars(Rule rule) {
 		for (Literal l : rule.getBody().getL()) {
 			for (Term f : l.getTrms().getTrms()) {
