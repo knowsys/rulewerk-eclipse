@@ -20,7 +20,6 @@ package rls4eclipse.ui.renaming;
  * #L%
  */
 
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -29,21 +28,19 @@ import org.eclipse.text.edits.TextEdit;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
-import org.eclipse.xtext.resource.ILocationInFileProvider;
 import org.eclipse.xtext.ui.refactoring.IRefactoringUpdateAcceptor;
 import org.eclipse.xtext.ui.refactoring.impl.DefaultRenameStrategy;
 import org.eclipse.xtext.ui.refactoring.impl.RefactoringException;
 import org.eclipse.xtext.ui.refactoring.ui.IRenameElementContext;
 
-import com.google.inject.Inject;
-
 import rls4eclipse.rLS.Term;
 import rls4eclipse.rLS.predicateName;
 
+@SuppressWarnings("restriction")
 public class RenameRefactor extends DefaultRenameStrategy {
 
-	@Inject
-	private ILocationInFileProvider locationInFileProvider;
+	//@Inject
+	//private ILocationInFileProvider locationInFileProvider;
 
 	private EObject targetElement;
 
@@ -74,12 +71,18 @@ public class RenameRefactor extends DefaultRenameStrategy {
 	@Override
 	public void createDeclarationUpdates(String newName, ResourceSet resourceSet,
 			IRefactoringUpdateAcceptor updateAcceptor) {
-		URI resourceURI = getTargetElementOriginalURI().trimFragment();
+		//URI resourceURI = getTargetElementOriginalURI().trimFragment();
 		if (getNameAttribute(targetElement).getName().contains("uv")) {
 			createDeclarationUpdatesHelper1(newName, resourceSet, updateAcceptor);
-		} else if (getNameAttribute(targetElement).getName().contains("PredName")) {
+		} else if (getNameAttribute(targetElement).getName().contains("PredName"))
+				{
 			createDeclarationUpdatesHelper2(newName, resourceSet, updateAcceptor);
-		} else {
+		} 
+		else if (getNameAttribute(targetElement).getName().contains("prediri"))
+				{
+			createDeclarationUpdatesHelper3(newName, resourceSet, updateAcceptor);
+		}
+		else {
 			throw new RefactoringException("Cannot Refactor this element.");
 		}
 	}
@@ -104,6 +107,19 @@ public class RenameRefactor extends DefaultRenameStrategy {
 		for (INode n : node.getParent().getRootNode().getChildren())
 			for (INode nn : n.getLeafNodes()) {
 				if (nn.getText().equals(PN.getPredName())) {
+					TextEdit referenceEdit = new ReplaceEdit(nn.getOffset(), nn.getLength(), newName);
+					updateAcceptor.accept(PN.eResource().getURI(), referenceEdit);
+				}
+			}
+	}
+
+	public void createDeclarationUpdatesHelper3(String newName, ResourceSet resourceSet,
+			IRefactoringUpdateAcceptor updateAcceptor) {
+		predicateName PN = (predicateName) targetElement;
+		ICompositeNode node = NodeModelUtils.findActualNodeFor(PN);
+		for (INode n : node.getParent().getRootNode().getChildren())
+			for (INode nn : n.getLeafNodes()) {
+				if (nn.getText().equals(PN.getPrediri())) {
 					TextEdit referenceEdit = new ReplaceEdit(nn.getOffset(), nn.getLength(), newName);
 					updateAcceptor.accept(PN.eResource().getURI(), referenceEdit);
 				}
