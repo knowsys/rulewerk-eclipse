@@ -1,5 +1,8 @@
 package rls4eclipse.ui.renaming;
 
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 /*-
  * #%L
  * rls4eclipse.ui
@@ -30,25 +33,33 @@ import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.ui.refactoring.IRefactoringUpdateAcceptor;
 import org.eclipse.xtext.ui.refactoring.impl.DefaultRenameStrategy;
-import org.eclipse.xtext.ui.refactoring.impl.RefactoringException;
 import org.eclipse.xtext.ui.refactoring.ui.IRenameElementContext;
-
+import rls4eclipse.rLS.IRIREF2;
+import rls4eclipse.rLS.PrefixedName2;
 import rls4eclipse.rLS.Term;
 import rls4eclipse.rLS.predicateName;
 
 @SuppressWarnings("restriction")
 public class RenameRefactor extends DefaultRenameStrategy {
 
-	//@Inject
-	//private ILocationInFileProvider locationInFileProvider;
+	// @Inject
+	// private ILocationInFileProvider locationInFileProvider;
 
 	private EObject targetElement;
 
 	@Override
 	public boolean initialize(EObject targetElement, IRenameElementContext context) {
-		if (super.initialize(targetElement, context)) {
-			this.targetElement = targetElement;
-			return true;
+		try {
+			if (super.initialize(targetElement, context)) {
+
+				this.targetElement = targetElement;
+				return true;
+			}
+		} catch (NullPointerException e) {
+			final JPanel panel = new JPanel();
+
+			JOptionPane.showMessageDialog(panel, "Only universal variables and predicate names can be refactored",
+					"Info message", JOptionPane.INFORMATION_MESSAGE);
 		}
 		return false;
 	}
@@ -56,11 +67,16 @@ public class RenameRefactor extends DefaultRenameStrategy {
 	@Override
 	protected EAttribute getNameAttribute(EObject targetElement) {
 		for (EAttribute attribute : targetElement.eClass().getEAttributes()) {
-			if (!attribute.getName().isEmpty()) { // $NON-NLS-1$
+			if (attribute.getName().contains("uv")||attribute.getName().contains("PredName")||attribute.getName().contains("iri2")||attribute.getName().contains("prefixname2")) { // $NON-NLS-1$
 				return attribute;
 			}
 		}
-		throw new RefactoringException("Cannot Refactor this element."); //$NON-NLS-1$
+		final JPanel panel = new JPanel();
+
+		JOptionPane.showMessageDialog(panel, "Only universal variables and predicate names can be refactored",
+				"Info message", JOptionPane.INFORMATION_MESSAGE);
+		return null;
+
 	}
 
 	@Override
@@ -71,20 +87,16 @@ public class RenameRefactor extends DefaultRenameStrategy {
 	@Override
 	public void createDeclarationUpdates(String newName, ResourceSet resourceSet,
 			IRefactoringUpdateAcceptor updateAcceptor) {
-		//URI resourceURI = getTargetElementOriginalURI().trimFragment();
+		// URI resourceURI = getTargetElementOriginalURI().trimFragment();
 		if (getNameAttribute(targetElement).getName().contains("uv")) {
 			createDeclarationUpdatesHelper1(newName, resourceSet, updateAcceptor);
-		} else if (getNameAttribute(targetElement).getName().contains("PredName"))
-				{
+		} else if (getNameAttribute(targetElement).getName().contains("PredName")) {
 			createDeclarationUpdatesHelper2(newName, resourceSet, updateAcceptor);
-		} 
-		else if (getNameAttribute(targetElement).getName().contains("prediri"))
-				{
+		} else if (getNameAttribute(targetElement).getName().contains("iri2")) {
 			createDeclarationUpdatesHelper3(newName, resourceSet, updateAcceptor);
-		}
-		else {
-			throw new RefactoringException("Cannot Refactor this element.");
-		}
+		} else if (getNameAttribute(targetElement).getName().contains("prefixname2")) {
+			createDeclarationUpdatesHelper4(newName, resourceSet, updateAcceptor);
+		} 
 	}
 
 	public void createDeclarationUpdatesHelper1(String newName, ResourceSet resourceSet,
@@ -115,11 +127,24 @@ public class RenameRefactor extends DefaultRenameStrategy {
 
 	public void createDeclarationUpdatesHelper3(String newName, ResourceSet resourceSet,
 			IRefactoringUpdateAcceptor updateAcceptor) {
-		predicateName PN = (predicateName) targetElement;
+		IRIREF2 PN = (IRIREF2) targetElement;
 		ICompositeNode node = NodeModelUtils.findActualNodeFor(PN);
 		for (INode n : node.getParent().getRootNode().getChildren())
 			for (INode nn : n.getLeafNodes()) {
-				if (nn.getText().equals(PN.getPrediri())) {
+				if (nn.getText().equals(PN.getIri2())) {
+					TextEdit referenceEdit = new ReplaceEdit(nn.getOffset(), nn.getLength(), newName);
+					updateAcceptor.accept(PN.eResource().getURI(), referenceEdit);
+				}
+			}
+	}
+
+	public void createDeclarationUpdatesHelper4(String newName, ResourceSet resourceSet,
+			IRefactoringUpdateAcceptor updateAcceptor) {
+		PrefixedName2 PN = (PrefixedName2) targetElement;
+		ICompositeNode node = NodeModelUtils.findActualNodeFor(PN);
+		for (INode n : node.getParent().getRootNode().getChildren())
+			for (INode nn : n.getLeafNodes()) {
+				if (nn.getText().equals(PN.getPrefixname2())) {
 					TextEdit referenceEdit = new ReplaceEdit(nn.getOffset(), nn.getLength(), newName);
 					updateAcceptor.accept(PN.eResource().getURI(), referenceEdit);
 				}

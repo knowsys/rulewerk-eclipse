@@ -29,7 +29,6 @@ import org.eclipse.xtext.ide.editor.syntaxcoloring.IHighlightedPositionAcceptor;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.util.CancelIndicator;
-import rls4eclipse.ui.syntaxhighlighting.CLHighlightingConfiguration;
 
 public class SemanticHighlightingCalculator extends DefaultSemanticHighlightingCalculator {
 	@Override

@@ -17,11 +17,20 @@ terminal E:
 PrefixedName:
 	prefixname=PNAME_LN;
 
+PrefixedName2:
+	prefixname2=PNAME_LN;
+
 IRIREF:
 	iri=IRI;
 
+IRIREF2:
+	iri2=IRI;
+
 IRIBOL:
-	iri=IRIREF | iri=PrefixedName;
+	iri1=IRIREF | iri2=PrefixedName;
+
+IRIBOL2:
+	iri1=IRIREF2 | iri2=PrefixedName2;
 
 RDFLiteral:
 	s=Striing
@@ -50,12 +59,11 @@ Term:
 	| cl=Configurable_Literal;
 
 predicateName:
-	prediri=IRIBOL
-	| PredName=VARORPREDNAME;
+	Prediri=IRIBOL2 |
+	PredName=VARORPREDNAME;
 
 listOfTerms:
-	trms+=Term
-	(COM2 trms+=Term)*;
+	trms+=Term (COM2 trms+=Term)*;
 
 NegativeLiteral:
 	TILDE predname=predicateName LPAREN trms=listOfTerms RPAREN;
@@ -67,30 +75,22 @@ PositiveLiteral:
 	predname=predicateName LPAREN trms=listOfTerms RPAREN;
 
 Literal:
-	PositiveLiteral
-	| NegativeLiteral;
+	PositiveLiteral | NegativeLiteral;
 
 listOfLiterals:
-	l+=Literal
-	(COM l+=Literal)*;
+	l+=Literal (COM l+=Literal)*;
 
 listOfPositiveLiterals:
-	pls+=PositiveLiteral
-	(COM pls+=PositiveLiteral)*;
+	pls+=PositiveLiteral (COM pls+=PositiveLiteral)*;
 
 Rule:
 	head=listOfPositiveLiterals ARROW body=listOfLiterals DOT;
 
 Statement:
-	rule=Rule
-	| fact=Fact
-	| directive=Directive;
+	rule=Rule | fact=Fact | directive=Directive;
 
 Striing:
-	st1=STRING_LITERAL1
-	| st2=STRING_LITERAL2
-	| stl1=STRING_LITERAL_LONG1
-	| stl2=STRING_LITERAL_LONG2;
+	st1=STRING_LITERAL1 | st2=STRING_LITERAL2 | stl1=STRING_LITERAL_LONG1 | stl2=STRING_LITERAL_LONG2;
 
 Directive:
 	directiveName=DIRECTIVENAME arguments=Arguments DOT;
@@ -121,7 +121,6 @@ Configurable_Literal:
 
 //parenDelimitedLiteralBody:
 //{parenDelimitedLiteralBody} (un=UNPAREN | LPAREN pdlb+=parenDelimitedLiteralBody RPAREN);
-
 braceDelimitedLiteral:
 	{braceDelimitedLiteral} '{' (bdlp+=braceDelimitedLiteralBody)* '}';
 
@@ -201,7 +200,6 @@ terminal UNBRACKET:
 
 	//terminal UNPAREN:
 //'(' (!('(' | ')'))+ ')';
-
 terminal PIPE_DELIMITED_LITERAL:
 	PIPE_DELIMITED (!"|")* PIPE_DELIMITED;
 
@@ -258,7 +256,6 @@ terminal A2Z:
 
 	//terminal A2ZNX:
 //("a".."z" | "A".."Z" | "0".."9" | "-" | "_");
-
 terminal A2ZN:
 	("a".."z" | "A".."Z" | "0".."9");
 

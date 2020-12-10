@@ -3,8 +3,6 @@
  */
 package rls4eclipse.ide;
 
-import org.eclipse.xtext.ide.refactoring.IRenameStrategy2;
-
 /*-
  * #%L
  * rls4eclipse.ide
