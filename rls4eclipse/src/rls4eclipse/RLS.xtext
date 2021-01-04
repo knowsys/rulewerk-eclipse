@@ -309,4 +309,3 @@ terminal PN_PREFIX:
 
 terminal PN_LOCAL:
 	(PN_CHARS_U | ":" | ("0".."9")) ((PN_CHARS | "." | ":")* PN_CHARS)?;
-
