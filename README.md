@@ -34,6 +34,9 @@ Currently supported xtext features
 * Auto-completion
 * Validations
 * Labeling
+* Rename Refactoring
+* Direct creation of Rulewerk files
+
 
 General information
 ------------
