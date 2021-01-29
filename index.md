@@ -1,38 +1,22 @@
-## Welcome to GitHub Pages
+## RuleWerk-eclipse
 
-You can use the [editor on GitHub](https://github.com/knowsys/rulewerk-eclipse/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+A java Xtext plugin for the [rule language](https://github.com/knowsys/rulewerk/wiki#rule-language) of [Rulewerk](https://github.com/knowsys/rulewerk). For further information regarding the syntax of rulewerk and some of its examples see (https://github.com/knowsys/rulewerk/wiki/Rule-syntax-grammar) and (https://github.com/knowsys/rulewerk/wiki/Rule-syntax-by-examples) 
 
-[desko](https://github.com/knowsys/rulewerk-eclipse/blob/gh-pages/Desktop.zip)
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+#Installing rls4eclipse in eclipse
+------------
+* From eclipse choose  ```Help ``` >  ```Install new Software ```
+* Select  ```Add ``` > copy the url ```https://knowsys.github.io/rulewerk-eclipse/``` to the location box > press ```Add```
+* Select  ```Rulewerk ``` then press next, finalize and accept all conditions
+* Choose  ```Install anyway ```
+* Select  ```Restart now ```
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/knowsys/rulewerk-eclipse/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+Currently supported xtext features
+------------
+* Syntax Highlighting
+* Auto-completion
+* Validations
+* Labeling
+* Rename Refactoring
+* Direct creation of Rulewerk files
