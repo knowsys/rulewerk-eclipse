@@ -23,8 +23,8 @@ Exporting rls4eclipse as a deployable feature
 Installing rls4eclipse in eclipse
 ------------
 * From eclipse choose  ```Help ``` >  ```Install new Software ```
-* Selecet  ```Add ``` >  ```Archive ``` > Choose the plugin's archive file
-* Tick right at  ```Uncategorized ``` then press next, finalize and accept all conditions
+* Select  ```Add ``` > copy the url ```https://knowsys.github.io/rulewerk-eclipse/``` to the location box > press ```Add```
+* Select  ```Rulewerk ``` then press next, finalize and accept all conditions
 * Choose  ```Install anyway ```
 * Select  ```Restart now ```
 
