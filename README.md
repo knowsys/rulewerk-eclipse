@@ -1,4 +1,4 @@
-# RuleWerk-eclipse
+# Rulewerk-eclipse
 
 
 A java Xtext plugin for the [rule language](https://github.com/knowsys/rulewerk/wiki#rule-language) of [Rulewerk](https://github.com/knowsys/rulewerk). For further information regarding the syntax of rulewerk and some of its examples see (https://github.com/knowsys/rulewerk/wiki/Rule-syntax-grammar) and (https://github.com/knowsys/rulewerk/wiki/Rule-syntax-by-examples) 
@@ -11,7 +11,7 @@ For Development make sure that Xtext 2.20 is installed from eclipse's marketplac
 * Right click on ```rls4eclipse``` module and then choose ```Run As``` > ```Eclipse Application``` (for the first time after choosing ```Run As``` the option ```Eclipse         Application``` might not be there, so instead select ```Run Configurations``` > double click on ```Eclipse Application``` and then select ```Run```
 * A new eclipse window will appear but with the features of ```rls4eclipse``` loaded and ready for testing
 
-Exporting rls4eclipse as a deployable feature
+Exporting Rulewerk-eclipse as a deployable feature
 ------------
 * From eclipse choose ```file``` > ```Export``` > choose ```Deployable features``` under ```Plug-in Development```
 * Select ```rls4eclipse.feature``` under ```Available Features``` and then press ```Options```
@@ -20,7 +20,7 @@ Exporting rls4eclipse as a deployable feature
 * Select ```Destination``` and then choose ```Archive file``` then press ```Browse``` and select the desired destination and file name for the feature
 * Select ```Finish```
 
-Installing rls4eclipse in eclipse
+Installing Rulewerk-eclipse in eclipse
 ------------
 * From eclipse choose  ```Help ``` >  ```Install new Software ```
 * Select  ```Add ``` > copy the url ```https://knowsys.github.io/rulewerk-eclipse/``` to the location box > press ```Add```
