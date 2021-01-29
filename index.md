@@ -15,7 +15,7 @@ Syntax highlighted code block
 ## Header 2
 ### Header 3
 
-Desktop.zip
+[desko](https://github.com/knowsys/rulewerk-eclipse/edit/gh-pages/Desktop.zip)
 
 - Bulleted
 - List
