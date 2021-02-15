@@ -3,7 +3,7 @@ Automatic-Module-Name: rls4eclipse
 Bundle-ManifestVersion: 2
 Bundle-Name: rls4eclipse
 Bundle-Vendor: My Company
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.2.0.qualifier
 Bundle-SymbolicName: rls4eclipse; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext,

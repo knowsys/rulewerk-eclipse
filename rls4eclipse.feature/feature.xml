@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="rls4eclipse.feature"
-      label="RLS Feature "
-      version="0.1.0.qualifier">
+      label="Rulewerk for Eclipse"
+      version="0.2.0.qualifier">
 
    <plugin
          id="rls4eclipse"

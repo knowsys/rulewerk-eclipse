@@ -439,9 +439,10 @@
  <extension
        point="org.eclipse.ui.menus">
     <menuContribution
-          locationURI="popup:common.new.menu?after=additions">
+          locationURI="popup:common.new.menu?after=new">
        <command
              commandId="rls4eclipse.ui.createRlsFile"
+             icon="icons/sample.png"
              id="rls_creator"
              label="Rulewerk file"
              style="push">
@@ -454,6 +455,7 @@
           locationURI="menu:new?after=additions">
        <command
              commandId="rls4eclipse.ui.createRlsFile"
+             icon="icons/sample.png"
              id="rls_creator"
              label="Rulewerk file"
              style="push">
@@ -463,7 +465,7 @@
        </command>
     </menuContribution>
  </extension>
- <extension
+<extension
        point="org.eclipse.ui.newWizards">
     <wizard
           category="rls4eclipse.ui"
@@ -471,7 +473,7 @@
           icon="icons/sample.png"
           id="rls4eclipse.ui.wizards.SampleNewWizard"
           name="rls file"
-          project="false">
+          project="true">
     </wizard>
     <category
           id="rls4eclipse.ui"

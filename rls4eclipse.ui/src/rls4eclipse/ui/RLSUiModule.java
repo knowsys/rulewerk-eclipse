@@ -38,6 +38,7 @@ import rls4eclipse.ui.contentassist.AbstractRLSProposalProvider;
 import rls4eclipse.ui.contentassist.RLSProposalProvider;
 import rls4eclipse.ui.renaming.RenameRefactor;
 import rls4eclipse.ui.syntaxhighlighting.CLHighlightingConfiguration;
+//import rls4eclipse.ui.syntaxhighlighting.CLHighlightingConfiguration;
 import rls4eclipse.ui.syntaxhighlighting.SemanticHighlightingCalculator;
 
 /**

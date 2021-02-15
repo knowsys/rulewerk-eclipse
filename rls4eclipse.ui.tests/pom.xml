@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.semanticweb.rls4eclipse.eclipse</groupId>
 		<artifactId>rls4eclipse.parent</artifactId>
-		<version>0.1.0-SNAPSHOT</version>
+		<version>0.2.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>rls4eclipse.ui.tests</artifactId>
 	<packaging>eclipse-test-plugin</packaging>
