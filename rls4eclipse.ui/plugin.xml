@@ -142,6 +142,11 @@
        id="rls4eclipse.ui.createRlsFile"
        name="Rls file">
  </command>
+ <command
+       defaultHandler="rls4eclipse.ui.handlers.runJar"
+       id="rls4eclipse.ui.runjar"
+       name="rulewerk jar">
+ </command>
 	</extension>
 	<extension point="org.eclipse.ui.menus">
 		<menuContribution
@@ -383,6 +388,10 @@
 				</reference>
 			</activeWhen>
 		</handler>
+  <handler
+        class="rls4eclipse.ui.handlers.runJar"
+        commandId="rls4eclipse.ui.handler1">
+  </handler>
 	</extension>
 	<extension point="org.eclipse.ui.menus">
 		<menuContribution
@@ -462,6 +471,14 @@
           <visibleWhen
                 checkEnabled="false">
           </visibleWhen>
+       </command>
+    </menuContribution>
+    <menuContribution
+          allPopups="true"
+          locationURI="menu:new?after=additions">
+       <command
+             commandId="rls4eclipse.ui.runjar"
+             style="push">
        </command>
     </menuContribution>
  </extension>

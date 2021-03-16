@@ -45,9 +45,7 @@ public class RLSProposalProvider extends AbstractRLSProposalProvider {
 	public void complete_UNIVAR(EObject model, RuleCall ruleCall, ContentAssistContext context,
 			ICompletionProposalAcceptor acceptor) {
 		uniVars.clear();
-
-		System.out.println(context.getCurrentNode().getParent().getParent().getParent().getParent().getText());
-		for (INode n : context.getCurrentNode().getParent().getParent().getParent().getParent().getLeafNodes()) {
+		for(INode n : context.getCurrentNode().getParent().getRootNode().getLeafNodes()) {
 			if (n.getText().startsWith("?")) {
 				uniVars.add(n.getText());
 			}

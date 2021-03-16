@@ -67,7 +67,7 @@ public class RenameRefactor extends DefaultRenameStrategy {
 	@Override
 	protected EAttribute getNameAttribute(EObject targetElement) {
 		for (EAttribute attribute : targetElement.eClass().getEAttributes()) {
-			if (attribute.getName().contains("uv")||attribute.getName().contains("PredName")||attribute.getName().contains("iri2")||attribute.getName().contains("prefixname2")) { // $NON-NLS-1$
+			if (attribute.getName().equals("v")||attribute.getName().contains("PredName")||attribute.getName().contains("iri2")||attribute.getName().contains("prefixname2")) { // $NON-NLS-1$
 				return attribute;
 			}
 		}
@@ -88,7 +88,7 @@ public class RenameRefactor extends DefaultRenameStrategy {
 	public void createDeclarationUpdates(String newName, ResourceSet resourceSet,
 			IRefactoringUpdateAcceptor updateAcceptor) {
 		// URI resourceURI = getTargetElementOriginalURI().trimFragment();
-		if (getNameAttribute(targetElement).getName().contains("uv")) {
+		if (getNameAttribute(targetElement).getName().equals("v")) {
 			createDeclarationUpdatesHelper1(newName, resourceSet, updateAcceptor);
 		} else if (getNameAttribute(targetElement).getName().contains("PredName")) {
 			createDeclarationUpdatesHelper2(newName, resourceSet, updateAcceptor);
@@ -105,7 +105,7 @@ public class RenameRefactor extends DefaultRenameStrategy {
 		ICompositeNode node = NodeModelUtils.findActualNodeFor(t);
 		for (INode n : node.getParent().getParent().getParent().getParent().getParent().getChildren())
 			for (INode nn : n.getLeafNodes()) {
-				if (nn.getText().equals(t.getUv())) {
+				if (nn.getText().equals(t.getV())&&!t.getV().isEmpty()&&t.getV().startsWith("?")) {
 					TextEdit referenceEdit = new ReplaceEdit(nn.getOffset(), nn.getLength(), newName);
 					updateAcceptor.accept(t.eResource().getURI(), referenceEdit);
 				}

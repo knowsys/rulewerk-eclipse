@@ -24,6 +24,7 @@ package rls4eclipse.validation;
  */
 
 import java.util.HashSet;
+import java.util.Iterator;
 
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
@@ -41,56 +42,72 @@ import rls4eclipse.rLS.Term;
  * https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 public class RLSValidator extends AbstractRLSValidator {
-	
 
 	@Check(CheckType.NORMAL)
 	public void checkUniVars(Rule rule) {
 		HashSet<String> a = new HashSet<String>();
 		for (Literal l : rule.getBody().getL()) {
 			for (Term f : l.getTrms().getTrms()) {
-				a.add(f.getUv());
+				String s=f.getV();
+				if (!s.equals(null)&&s.startsWith("?"))
+				a.add(s);
 			}
 		}
 		for (PositiveLiteral x : rule.getHead().getPls()) {
 			for (Term t : x.getTrms().getTrms()) {
-				if (!a.contains(t.getUv()) && (!t.getUv().isEmpty())) {
+				String k =t.getV();
+				if (!a.contains(k) && (!k.equals(null))&&k.startsWith("?")) {
 					error("every universal variable in the head of the rule must also be in the body of the rule",
-							rule.eClass().getEStructuralFeature(RLSPackage.RULE),-1);
+							rule.eClass().getEStructuralFeature(RLSPackage.RULE), -1);
 
 				}
 			}
 		}
 
 	}
-
 	@Check(CheckType.NORMAL)
-	public void checkMalformedRule(Rule rule) {
+	public void checkMalformed(Rule rule) {
 		HashSet<String> a = new HashSet<String>();
+		HashSet<String> a2 = new HashSet<String>();
+		HashSet<PositiveLiteral>pl =new HashSet<PositiveLiteral>(rule.getHead().getPls());
+		Iterator<PositiveLiteral>it1=  pl.iterator();
+		while (it1.hasNext()) {
+			PositiveLiteral x = it1.next();
+			HashSet<Term> ht = new HashSet<Term>(x.getTrms().getTrms());
+			Iterator<Term> it = ht.iterator();
+			while(it.hasNext()) {
+				Term t = it.next();
+				String k=t.getV();
+				if (!k.equals(null)&&k.startsWith("!")) {
+				String s = t.getV().replace("!", "");
+				a2.add(s);
+			}
+			}
+		}
 		for (Literal l : rule.getBody().getL()) {
 			for (Term f : l.getTrms().getTrms()) {
-				a.add(f.getUv().replace("?", ""));
+				if (!f.getV().equals(null)&&f.getV().startsWith("?"))
+				a.add(f.getV().replace("?", ""));
 			}
 		}
-		for (PositiveLiteral x : rule.getHead().getPls()) {
-			for (Term t : x.getTrms().getTrms()) {
-				String s = t.getEv().replace("!", "");
-				if (a.contains(s)) {
-					error("Variable that is existentially quantified in the head cannot be universally quantified in the body of the rule",
-							rule.eClass().getEStructuralFeature(RLSPackage.RULE));
-				}
+		for (String s:a2) {
+			if (a.contains(s)){
+				error("Variable that is existentially quantified in the head cannot be universally quantified in the body of the rule",
+						rule.eClass().getEStructuralFeature(RLSPackage.RULE));
 			}
 		}
 
 	}
-
 	@Check(CheckType.NORMAL)
 	public void checkExiVars(Rule rule) {
+		// System.out.println(rule.);
 		for (Literal l : rule.getBody().getL()) {
 			for (Term f : l.getTrms().getTrms()) {
-				if (!f.getEv().isEmpty()) {
+				String s =f.getV();
+				if (!s.equals(null)&&s.startsWith("!")) {
 					error("Existentialy quantified variables can not appear in the body of the rule",
 							rule.eClass().getEStructuralFeature(RLSPackage.RULE));
-				} else if (!f.getNn().isEmpty()) {
+				} else if (!s.equals(null)&&s.startsWith("_:")) {
 					error("Named nulls can not appear in the body of the rule",
 							rule.eClass().getEStructuralFeature(RLSPackage.RULE));
 				}

@@ -52,10 +52,10 @@ Term:
 	iri=IRIBOL
 	| nl=NumericLiteral
 	| rl=RDFLiteral
-	| uv=UNIVAR
-	| ev=EXIVAR
+	| v=UNIVAR
+	| v=EXIVAR
 	| v=VARORPREDNAME
-	| nn=NAMED_NULL
+	| v=NAMED_NULL
 	| cl=Configurable_Literal;
 
 predicateName:
