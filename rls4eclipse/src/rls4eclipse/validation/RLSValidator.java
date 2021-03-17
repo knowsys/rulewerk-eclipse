@@ -30,6 +30,7 @@ import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
 
 import rls4eclipse.rLS.Literal;
+import rls4eclipse.rLS.NegativeLiteral;
 import rls4eclipse.rLS.PositiveLiteral;
 import rls4eclipse.rLS.RLSPackage;
 import rls4eclipse.rLS.Rule;
@@ -114,6 +115,39 @@ public class RLSValidator extends AbstractRLSValidator {
 			}
 		}
 
+	}
+	@Check(CheckType.NORMAL)
+	public void checkNegationSafe(Rule rule) {
+		// System.out.println(rule.);
+		HashSet<String> a = new HashSet<String>();
+		for (Literal l : rule.getBody().getL()) {
+			if (l instanceof PositiveLiteral) {
+				for (Term t : l.getTrms().getTrms()) {
+					String s =t.getV();
+					if (!s.equals(null)&&s.startsWith("?")) {
+						a.add(s);
+					}
+					
+				}
+			}
+			//for (Term f : l.getTrms().getTrms()) {
+				//String s =f.getV();
+				
+			//}
+		}
+		for (Literal l : rule.getBody().getL()) {
+			if (l instanceof NegativeLiteral) {
+				for (Term t : l.getTrms().getTrms()) {
+					String s =t.getV();
+					if (!s.equals(null)&&s.startsWith("?")) {
+						if (!a.contains(s)) {
+							error("every universal variable in a negative literal must be in a postive literal in the body of the rule",
+									rule.eClass().getEStructuralFeature(RLSPackage.RULE));
+						}
+					}
+				}
+		}
+		}
 	}
 
 }
