@@ -3,7 +3,14 @@
  */
 package rls4eclipse.ui.labeling;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.xtext.AbstractRule;
+import org.eclipse.xtext.RuleCall;
+import org.eclipse.xtext.nodemodel.ICompositeNode;
+import org.eclipse.xtext.nodemodel.ILeafNode;
+import org.eclipse.xtext.nodemodel.INode;
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
 
 /*-
@@ -30,7 +37,11 @@ import com.google.inject.Inject;
 
 import rls4eclipse.rLS.AR;
 import rls4eclipse.rLS.Arguments;
+import rls4eclipse.rLS.Fact;
 import rls4eclipse.rLS.IRIBOL;
+import rls4eclipse.rLS.IRIBOL2;
+import rls4eclipse.rLS.IRIREF;
+import rls4eclipse.rLS.IRIREF2;
 import rls4eclipse.rLS.Literal;
 import rls4eclipse.rLS.NegativeLiteral;
 import rls4eclipse.rLS.NumericLiteral;
@@ -46,7 +57,7 @@ import rls4eclipse.rLS.Term;
 import rls4eclipse.rLS.listOfLiterals;
 import rls4eclipse.rLS.listOfPositiveLiterals;
 import rls4eclipse.rLS.listOfTerms;
-//import rls4eclipse.rLS.UNIVAR;
+import rls4eclipse.rLS.predicateName;
 
 /**
  * Provides labels for EObjects.
@@ -62,15 +73,139 @@ public class RLSLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(Rule r) {
-		return "Rule";
-	}
+		String s ="";
+		ICompositeNode node = NodeModelUtils.findActualNodeFor(r);
+		//s=node.getText().replaceAll("\\r", "");
+		//System.out.println(s);
+		for (INode n:node.getChildren()){
+			//System.out.println(n.getText());
+			String[]k=n.getText().split("\\n");
+			for (String m:k) {
+				String ss=m.replace(" ", "");
+				if (!ss.startsWith("%")) {
+					m=m.replaceAll("\\r\\n|\\r|\\n", "");
+					s=s+m;
+				}
+					
+			}
+		}
+		String[]h=s.split(":-");
+		return h[0].trim();
+//		for (PositiveLiteral pl :r.getHead().getPls()) {
+//			if (!pl.getPredname().getPredName().equals(null)) {
+//				s=s+pl.getPredname().getPredName()+"(";
+//			}else {
+//				if (!pl.getPredname().getPrediri().getIri1().equals(null)) {
+//					s=s+pl.getPredname().getPrediri().getIri1().getIri2()+"(";
+//				}else {
+//					s=s+pl.getPredname().getPrediri().getIri2().getPrefixname2()+"(";
+//				}
+//			}
+//			String h="";
+//			for(Term t:pl.getTrms().getTrms()) {
+//			if (!t.getV().equals(null)) {
+//				h=h+t.getV()+",";
+//			}else if (!t.getCl().equals(null)) {
+//				if (!t.getCl().getBdl1().equals(null)) {
+//					h=h+t.getCl().getBdl1()+",";
+//				}else if (!t.getCl().getBdl2().equals(null)) {
+//					h=h+t.getCl().getBdl2()+",";
+//				}else if (!t.getCl().getPdl().equals(null)) {
+//					h=h+t.getCl().getPdl()+",";
+//				}else if (!t.getCl().getHdl().equals(null)) {
+//					h=h+t.getCl().getHdl()+",";
+//				}
+//			}else if (!t.getIri().equals(null)) {
+//				if (!t.getIri().getIri1().equals(null)) {
+//					h=h+t.getIri().getIri1().getIri()+",";
+//				}else if (!t.getIri().getIri2().equals(null)) {
+//					h=h+t.getIri().getIri2().getPrefixname()+",";
+//				}
+//			}else if (!t.getNl().equals(null)) {
+//				if (!t.getNl().getDbl().equals(null)) {
+//					h=h+t.getNl().getDbl()+",";
+//				}else if (!t.getNl().getDec().equals(null)) {
+//					h=h+t.getNl().getDec()+",";
+//				}else if (!t.getNl().getInt().equals(null)) {
+//					h=h+t.getNl().getInt()+",";
+//				}
+//			}else {
+//				if (!t.getRl().getL().equals(null)) {
+//					h=h+t.getRl().getL()+",";
+//				}else if (!t.getRl().getS().equals(null)) {
+//					if (!t.getRl().getS().getSt().equals(null)) {
+//					h=h+t.getRl().getS().getSt()+",";
+//					}
+////					else if (!t.getRl().getS().getSt2().equals(null)) {
+////						h=h+t.getRl().getS().getSt2()+",";
+////						}else if (!t.getRl().getS().getStl1().equals(null)) {
+////							h=h+t.getRl().getS().getStl1()+",";
+////						}else if (!t.getRl().getS().getStl2().equals(null)) {
+////							h=h+t.getRl().getS().getStl2()+",";
+////						}
+//				}else {
+//					if (!t.getRl().getIri().getIri1().equals(null)) {
+//						h=h+t.getRl().getIri().getIri1().getIri()+",";
+//					}else {
+//						h=h+t.getRl().getIri().getIri2().getPrefixname()+",";
+//					}
+//				}
+//			}
+//			}
+//			h=h.substring(0, h.length() - 1);
+//			s=s+h+"),";
+//		}
+//		s=s.substring(0, s.length() - 1);
+//		s=s.replace("),", "), ");
+//		return s;
+//	}
+//		
+}
+String text(Statement s) {
+	String st ="";
+	ICompositeNode node = NodeModelUtils.findActualNodeFor(s);
+	//s=node.getText().replaceAll("\\r", "");
+	//System.out.println(s);
+	for (INode n:node.getChildren()){
+		//System.out.println(n.getText());
+		String[]k=n.getText().split("\\n");
+		for (String m:k) {
+			String ss=m.replace(" ", "");
+			if (!ss.startsWith("%")) {
+				m=m.replaceAll("\\r\\n|\\r|\\n", "");
+				st=st+m;
+			}
 
-	String text(Statement s) {
-		return "Statement";
+	}
+}
+	String[]h=st.split(":-");
+	return h[0].trim();
+//	String text(predicateName s) {
+//		if (!s.getPredName().equals(null)) {
+//			return s.getPredName();
+//		}else {
+//			if (!s.getPrediri().getIri1().equals(null)) {
+//				return s.getPrediri().getIri1().getIri2();
+//			}else {
+//				return s.getPrediri().getIri2().getPrefixname2();
+//			}
+//		}
 	}
 
 	String text(listOfPositiveLiterals h) {
 		return "Head";
+	}
+	
+	String text(IRIBOL2 ib) {
+		return "IB";
+	}
+	
+	String text(IRIREF ir) {
+		return ir.getIri();
+	}
+	
+	String text(IRIREF2 ir) {
+		return ir.getIri2();
 	}
 
 	String text(listOfLiterals s) {
@@ -78,35 +213,339 @@ public class RLSLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(Literal s) {
-		return "Predicate name";
+		ICompositeNode node = NodeModelUtils.findActualNodeFor(s);
+		String kk= node.getText().replaceAll("\\r\\n|\\r|\\n", "");
+		return kk.trim();
+//		String h="";
+//		if (!s.getPredname().getPredName().equals(null)) {
+//			h=h+s.getPredname().getPredName()+"(";
+//		}else {
+//			if (!s.getPredname().getPrediri().getIri1().equals(null)) {
+//				h=h+s.getPredname().getPrediri().getIri1().getIri2()+"(";
+//			}else {
+//				h=h+s.getPredname().getPrediri().getIri2().getPrefixname2()+"(";
+//			}
+//		}
+//		
+//		for(Term t:s.getTrms().getTrms()) {
+//			if (!t.getV().equals(null)) {
+//				h=h+t.getV()+",";
+//			}else if (!t.getCl().equals(null)) {
+//				if (!t.getCl().getBdl1().equals(null)) {
+//					h=h+t.getCl().getBdl1()+",";
+//				}else if (!t.getCl().getBdl2().equals(null)) {
+//					h=h+t.getCl().getBdl2()+",";
+//				}else if (!t.getCl().getPdl().equals(null)) {
+//					h=h+t.getCl().getPdl()+",";
+//				}else if (!t.getCl().getHdl().equals(null)) {
+//					h=h+t.getCl().getHdl()+",";
+//				}
+//			}else if (!t.getIri().equals(null)) {
+//				if (!t.getIri().getIri1().equals(null)) {
+//					h=h+t.getIri().getIri1().getIri()+",";
+//				}else if (!t.getIri().getIri2().equals(null)) {
+//					h=h+t.getIri().getIri2().getPrefixname()+",";
+//				}
+//			}else if (!t.getNl().equals(null)) {
+//				if (!t.getNl().getDbl().equals(null)) {
+//					h=h+t.getNl().getDbl()+",";
+//				}else if (!t.getNl().getDec().equals(null)) {
+//					h=h+t.getNl().getDec()+",";
+//				}else if (!t.getNl().getInt().equals(null)) {
+//					h=h+t.getNl().getInt()+",";
+//				}
+//			}else {
+//				if (!t.getRl().getL().equals(null)) {
+//					h=h+t.getRl().getL()+",";
+//				}else if (!t.getRl().getS().equals(null)) {
+//					if (!t.getRl().getS().getSt().equals(null)) {
+//						h=h+t.getRl().getS().getSt()+",";
+//						}
+////					else if (!t.getRl().getS().getSt2().equals(null)) {
+////							h=h+t.getRl().getS().getSt2()+",";
+////							}else if (!t.getRl().getS().getStl1().equals(null)) {
+////								h=h+t.getRl().getS().getStl1()+",";
+////							}else if (!t.getRl().getS().getStl2().equals(null)) {
+////								h=h+t.getRl().getS().getStl2()+",";
+////							}
+//				}else {
+//					if (!t.getRl().getIri().getIri1().equals(null)) {
+//						h=h+t.getRl().getIri().getIri1().getIri()+",";
+//					}else {
+//						h=h+t.getRl().getIri().getIri2().getPrefixname()+",";
+//					}
+//				}
+//			}
+//			}
+//			h=h.substring(0, h.length() - 1);
+//			h=h+")";
+//			return h;
+		
 	}
+	
 
 	String text(PositiveLiteral s) {
-		return "Positive Literal";
+//		String h="";
+//		if (!s.getPredname().getPredName().equals(null)) {
+//			h=h+s.getPredname().getPredName()+"(";
+//		}else {
+//			if (!s.getPredname().getPrediri().getIri1().equals(null)) {
+//				h=h+s.getPredname().getPrediri().getIri1().getIri2()+"(";
+//			}else {
+//				h=h+s.getPredname().getPrediri().getIri2().getPrefixname2()+"(";
+//			}
+//		}
+//		
+//		for(Term t:s.getTrms().getTrms()) {
+//			if (!t.getV().equals(null)) {
+//				h=h+t.getV()+",";
+//			}else if (!t.getCl().equals(null)) {
+//				if (!t.getCl().getBdl1().equals(null)) {
+//					h=h+t.getCl().getBdl1()+",";
+//				}else if (!t.getCl().getBdl2().equals(null)) {
+//					h=h+t.getCl().getBdl2()+",";
+//				}else if (!t.getCl().getPdl().equals(null)) {
+//					h=h+t.getCl().getPdl()+",";
+//				}else if (!t.getCl().getHdl().equals(null)) {
+//					h=h+t.getCl().getHdl()+",";
+//				}
+//			}else if (!t.getIri().equals(null)) {
+//				if (!t.getIri().getIri1().equals(null)) {
+//					h=h+t.getIri().getIri1().getIri()+",";
+//				}else if (!t.getIri().getIri2().equals(null)) {
+//					h=h+t.getIri().getIri2().getPrefixname()+",";
+//				}
+//			}else if (!t.getNl().equals(null)) {
+//				if (!t.getNl().getDbl().equals(null)) {
+//					h=h+t.getNl().getDbl()+",";
+//				}else if (!t.getNl().getDec().equals(null)) {
+//					h=h+t.getNl().getDec()+",";
+//				}else if (!t.getNl().getInt().equals(null)) {
+//					h=h+t.getNl().getInt()+",";
+//				}
+//			}else {
+//				if (!t.getRl().getL().equals(null)) {
+//					h=h+t.getRl().getL()+",";
+//				}else if (!t.getRl().getS().equals(null)) {
+//					if (!t.getRl().getS().getSt().equals(null)) {
+//						h=h+t.getRl().getS().getSt()+",";
+//						}
+////					else if (!t.getRl().getS().getSt2().equals(null)) {
+////							h=h+t.getRl().getS().getSt2()+",";
+////							}else if (!t.getRl().getS().getStl1().equals(null)) {
+////								h=h+t.getRl().getS().getStl1()+",";
+////							}else if (!t.getRl().getS().getStl2().equals(null)) {
+////								h=h+t.getRl().getS().getStl2()+",";
+////							}
+//				}else {
+//					if (!t.getRl().getIri().getIri1().equals(null)) {
+//						h=h+t.getRl().getIri().getIri1().getIri()+",";
+//					}else {
+//						h=h+t.getRl().getIri().getIri2().getPrefixname()+",";
+//					}
+//				}
+//			}
+//			}
+//			h=h.substring(0, h.length() - 1);
+//			h=h+")";
+		ICompositeNode node = NodeModelUtils.findActualNodeFor(s);
+		String kk= node.getText().replaceAll("\\r\\n|\\r|\\n", "");
+		return kk.trim();
+	}
+	
+	String text(Fact f) {
+		String s ="";
+//		ICompositeNode node = NodeModelUtils.findActualNodeFor(f);
+//		//s=node.getText().replaceAll("\\r", "");
+//		//System.out.println(s);
+//		for (INode n:node.getChildren()){
+//			//System.out.println(n.getText());
+//			String[]k=n.getText().split("\\n");
+//			for (String m:k) {
+//				String ss=m.replace(" ", "");
+//				if (!ss.startsWith("%")) {
+//					m=m.replaceAll("\\r\\n|\\r|\\n", "");
+//					s=s+m;
+//				}
+//					
+//			}
+//		}
+		return s;
 	}
 
 	String text(NegativeLiteral s) {
-		return "Negative Literal";
+		ICompositeNode node = NodeModelUtils.findActualNodeFor(s);
+		String kk= node.getText().replaceAll("\\r\\n|\\r|\\n", " ");
+		return kk.trim();
+//		String h="";
+//		if (!s.getPredname().getPredName().equals(null)) {
+//			h=h+"~"+s.getPredname().getPredName()+"(";
+//		}else {
+//			if (!s.getPredname().getPrediri().getIri1().equals(null)) {
+//				h=h+s.getPredname().getPrediri().getIri1().getIri2()+"(";
+//			}else {
+//				h=h+s.getPredname().getPrediri().getIri2().getPrefixname2()+"(";
+//			}
+//		}
+//		for(Term t:s.getTrms().getTrms()) {
+//			if (!t.getV().equals(null)) {
+//				h=h+t.getV()+",";
+//			}else if (!t.getCl().equals(null)) {
+//				if (!t.getCl().getBdl1().equals(null)) {
+//					h=h+t.getCl().getBdl1()+",";
+//				}else if (!t.getCl().getBdl2().equals(null)) {
+//					h=h+t.getCl().getBdl2()+",";
+//				}else if (!t.getCl().getPdl().equals(null)) {
+//					h=h+t.getCl().getPdl()+",";
+//				}else if (!t.getCl().getHdl().equals(null)) {
+//					h=h+t.getCl().getHdl()+",";
+//				}
+//			}else if (!t.getIri().equals(null)) {
+//				if (!t.getIri().getIri1().equals(null)) {
+//					h=h+t.getIri().getIri1().getIri()+",";
+//				}else if (!t.getIri().getIri2().equals(null)) {
+//					h=h+t.getIri().getIri2().getPrefixname()+",";
+//				}
+//			}else if (!t.getNl().equals(null)) {
+//				if (!t.getNl().getDbl().equals(null)) {
+//					h=h+t.getNl().getDbl()+",";
+//				}else if (!t.getNl().getDec().equals(null)) {
+//					h=h+t.getNl().getDec()+",";
+//				}else if (!t.getNl().getInt().equals(null)) {
+//					h=h+t.getNl().getInt()+",";
+//				}
+//			}else {
+//				if (!t.getRl().getL().equals(null)) {
+//					h=h+t.getRl().getL()+",";
+//				}else if (!t.getRl().getS().equals(null)) {
+//					if (!t.getRl().getS().getSt().equals(null)) {
+//						h=h+t.getRl().getS().getSt()+",";
+//						}
+////					else if (!t.getRl().getS().getSt2().equals(null)) {
+////							h=h+t.getRl().getS().getSt2()+",";
+////							}else if (!t.getRl().getS().getStl1().equals(null)) {
+////								h=h+t.getRl().getS().getStl1()+",";
+////							}else if (!t.getRl().getS().getStl2().equals(null)) {
+////								h=h+t.getRl().getS().getStl2()+",";
+////							}
+//				}else {
+//					if (!t.getRl().getIri().getIri1().equals(null)) {
+//						h=h+t.getRl().getIri().getIri1().getIri()+",";
+//					}else {
+//						h=h+t.getRl().getIri().getIri2().getPrefixname()+",";
+//					}
+//				}
+//			}
+//			}
+//			h=h.substring(0, h.length() - 1);
+//			h=h+")";
+//			return h;
 	}
 
-	String text(listOfTerms s) {
+String text(listOfTerms s) {
 		return "Terms";
 	}
 
 	String text(Term t) {
-		return "Term";
+//		if (!t.getV().equals(null)) {
+//			return t.getV();
+//		}else if (!t.getCl().equals(null)) {
+//			if (!t.getCl().getBdl1().equals(null)) {
+//				return t.getCl().getBdl1().getBdlp()+"";
+//			}else if (!t.getCl().getBdl2().equals(null)) {
+//				return t.getCl().getBdl2().getBdlb()+"";
+//			}else if (!t.getCl().getPdl().equals(null)) {
+//				return t.getCl().getPdl();
+//			}else if (!t.getCl().getHdl().equals(null)) {
+//				return t.getCl().getHdl();
+//			}
+//		}else if (!t.getIri().equals(null)) {
+//			if (!t.getIri().getIri1().equals(null)) {
+//				return t.getIri().getIri1().getIri();
+//			}else if (!t.getIri().getIri2().equals(null)) {
+//				return t.getIri().getIri2().getPrefixname();
+//			}
+//		}else if (!t.getNl().equals(null)) {
+//			if (!t.getNl().getDbl().equals(null)) {
+//				return t.getNl().getDbl();
+//			}else if (!t.getNl().getDec().equals(null)) {
+//				return t.getNl().getDec();
+//			}else if (!t.getNl().getInt().equals(null)) {
+//				return t.getNl().getInt();
+//			}
+//		}else {
+//			if (!t.getRl().getL().equals(null)) {
+//				return t.getRl().getL();
+//			}else if (!t.getRl().getS().equals(null)) {
+//				if (!t.getRl().getS().getSt().equals(null)) {
+//					return t.getRl().getS().getSt();
+//					}
+////				else if (!t.getRl().getS().getSt2().equals(null)) {
+////						return t.getRl().getS().getSt2();
+////						}else if (!t.getRl().getS().getStl1().equals(null)) {
+////							return t.getRl().getS().getStl1();
+////						}else if (!t.getRl().getS().getStl2().equals(null)) {
+////							return t.getRl().getS().getStl2();
+////						}
+//			}else {
+//				if (!t.getRl().getIri().getIri1().equals(null)) {
+//					return t.getRl().getIri().getIri1().getIri();
+//				}else {
+//					return t.getRl().getIri().getIri2().getPrefixname();
+//				}
+//
+//			}
+//			
+//			}
+		ICompositeNode node = NodeModelUtils.findActualNodeFor(t);
+		String kk= node.getText().replaceAll("\\r\\n|\\r|\\n", "");
+		return kk.trim();
 	}
 
 	String text(Arguments a) {
 		return "Arguments";
 	}
 
-	String text(Source s) {
-		return "Source";
+	String text(Source st) {
+		String s ="";
+		ICompositeNode node = NodeModelUtils.findActualNodeFor(st);
+		//s=node.getText().replaceAll("\\r", "");
+		//System.out.println(s);
+		for (INode n:node.getChildren()){
+			//System.out.println(n.getText());
+			String[]k=n.getText().split("\\n");
+			for (String m:k) {
+				String ss=m.replace(" ", "");
+				if (!ss.startsWith("%")) {
+					m=m.replaceAll("\\r\\n|\\r|\\n", "");
+					s=s+m;
+				}
+					
+			}
+		}
+		String[]h=s.split(":");
+		return h[0].trim();	
 	}
 
 	String text(Prefix p) {
-		return "Prefix";
+		String s ="";
+		ICompositeNode node = NodeModelUtils.findActualNodeFor(p);
+		//s=node.getText().replaceAll("\\r", "");
+		//System.out.println(s);
+		for (INode n:node.getChildren()){
+			//System.out.println(n.getText());
+			String[]k=n.getText().split("\\n");
+			for (String m:k) {
+				String ss=m.replace(" ", "");
+				if (!ss.startsWith("%")) {
+					m=m.replaceAll("\\r\\n|\\r|\\n", "");
+					s=s+m;
+				}
+					
+			}
+		}
+		String[]h=s.split(":");
+		return h[0].trim();	
 	}
 
 	String text(PrefixedName pn) {
@@ -118,11 +557,42 @@ public class RLSLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(Striing st) {
-		return "String";
+		if (!st.getSt().equals(null)) {
+			return st.getSt();
+			}
+//		else if (!st.getSt2().equals(null)) {
+//				return st.getSt2();
+//				}else if (!st.getStl1().equals(null)) {
+//					return st.getStl1();
+//				}else if (!st.getStl2().equals(null)) {
+//					return st.getStl2();
+//				}
+		return "ali";
 	}
 
 	String text(RDFLiteral rd) {
-		return "RDFLiteral";
+		if (!rd.getS().equals(null)) {
+			if (!rd.getS().getSt().equals(null)) {
+				return rd.getS().getSt();
+				}
+//			else if (!rd.getS().getSt2().equals(null)) {
+//					return rd.getS().getSt2();
+//					}else if (!rd.getS().getStl1().equals(null)) {
+//						return rd.getS().getStl1();
+//					}else if (!rd.getS().getStl2().equals(null)) {
+//						return rd.getS().getStl2();
+//					}
+		}else if (!rd.getL().equals(null)) {
+			return rd.getL();
+		}else {
+			if (!rd.getIri().getIri1().equals(null)) {
+				return rd.getIri().getIri1().getIri();
+			}else {
+				return rd.getIri().getIri2().getPrefixname();
+			}
+
+		}
+		return "RDF";
 	}
 
 	String text(IRIBOL iri) {

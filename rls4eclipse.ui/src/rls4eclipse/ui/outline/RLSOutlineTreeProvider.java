@@ -3,6 +3,13 @@
  */
 package rls4eclipse.ui.outline;
 
+import org.eclipse.debug.internal.ui.DefaultLabelProvider;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.xtext.nodemodel.ICompositeNode;
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
+import org.eclipse.xtext.ui.editor.outline.IOutlineNode;
+
 /*-
  * #%L
  * rls4eclipse.ui
@@ -24,38 +31,119 @@ package rls4eclipse.ui.outline;
  */
 
 import org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider;
+import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode;
+import org.eclipse.xtext.ui.label.AbstractLabelProvider;
+
+import rls4eclipse.rLS.Directive;
+import rls4eclipse.rLS.Fact;
+import rls4eclipse.rLS.Prefix;
+import rls4eclipse.rLS.Rule;
+import rls4eclipse.rLS.Source;
+import rls4eclipse.rLS.Statement;
+import rls4eclipse.rLS.Term;
+import rls4eclipse.rLS.listOfTerms;
+import rls4eclipse.ui.labeling.RLSLabelProvider;
+
 
 /**
  * Customization of the default outline structure.
  *
- * See https://www.eclipse.org/Xtext/documentation/310_eclipse_support.html#outline
+ * See
+ * https://www.eclipse.org/Xtext/documentation/310_eclipse_support.html#outline
  */
 public class RLSOutlineTreeProvider extends DefaultOutlineTreeProvider {
 	// protected void _createChildren(DocumentRootNode parentNode, EObject
-			// modelElement) {
-			// createNode(parentNode, modelElement);
+	// modelElement) {
+	// createNode(parentNode, modelElement);
+	// }
+
+	@Override
+	protected void _createChildren(IOutlineNode parentNode, EObject modelElement) {
+		for (EObject a : modelElement.eContents()) {
+			Object text = textDispatcher.invoke(a);
+			 //System.out.println(text);
+			// if (!text.equals("Body")) {
+			 //if (!text.equals(null)) {
+//			 if (a instanceof listOfTerms) {
+//				 for (Term t :((listOfTerms) a).getTrms()) {
+//					 createNode(parentNode,  t);
+//				 }
+//			 }else//
+			//if (!text.equals(null)) {
+//			 {
+			//System.out.println(a.getClass());
+			//System.out.println(text);
+			//if (a instanceof listOfTerms) {
+			//if (!labelProvider.getText(a).equals(null))
+					createNode(parentNode,  a);
+				//}
+			//}
 			// }
+		}
+	}
 
-		/*	@Override
-			protected void _createChildren(IOutlineNode parentNode, EObject modelElement) {
-				for (EObject a : modelElement.eContents()) {
-					Object text = textDispatcher.invoke(a);
-					System.out.println(text);
-					if (!text.equals("Body")) {
-						createNode(parentNode, a);
-					}
-				}
-			}*/
+	// protected void _createNode(IOutlineNode parentNode, Rule modelElement) {
+	// }
+	
+	protected boolean _isLeaf(Statement r) {
+		//Object text = textDispatcher.invoke(t);
+		//System.out.println(text);
+	//	if (t.toString().equals(null)) {
+			return true;
+		//}
+		//return false;
+	}
+	
+	protected boolean _isLeaf(Prefix p) {
+		//Object text = textDispatcher.invoke(t);
+		//System.out.println(text);
+	//	if (t.toString().equals(null)) {
+			return true;
+		//}
+		//return false;
+	}
+	
+	protected boolean _isLeaf(Source p) {
+		//Object text = textDispatcher.invoke(t);
+		//System.out.println(text);
+	//	if (t.toString().equals(null)) {
+			return true;
+		//}
+		//return false;
+	}
 
-			//protected void _createNode(IOutlineNode parentNode, Rule modelElement) {
-			// }
+	protected void _createChildren(DocumentRootNode parentNode, EObject modelElement) {
+		for (EObject a : modelElement.eContents()) {
+			if (a instanceof Statement) {
+////				if (a instanceof Directive) {
+////				Object text = textDispatcher.invoke(((Statement) a).getDirective());
+////				createNode(parentNode, ((Statement) a).getDirective());
+////			//	System.out.println(text);
+////				}else if (a instanceof Fact) {
+////					System.out.println("yess");
+////					Object text = textDispatcher.invoke(((Statement) a).getFact());
+////					createNode(parentNode, ((Statement) a).getFact());
+////					//System.out.println(text);
+////					}else {
+////						//System.out.println(text);
+////						//if (!text.equals(null)) {
+	createNode(parentNode, ((Statement) a));
+			}
+////							//}
+////						//System.out.println(text);
+////					
+////			}
+//				
+//			}
+			else {
+				Object text = textDispatcher.invoke(a);
+				//if (!text.equals(null)) {
+				createNode(parentNode, a);
+				//}
+			}
+			// else { createNode(parentNode, a); }
 
-			/*
-			 * protected void _createChildren(DocumentRootNode parentNode, EObject
-			 * modelElement) { for (EObject a : modelElement.eContents()) { if (a instanceof
-			 * Statement) { Object text = textDispatcher.invoke(a);
-			 * System.out.println(text); } else { createNode(parentNode, a); }
-			 * 
-			 * } }
-			 */
+		}
+	}
+
 }

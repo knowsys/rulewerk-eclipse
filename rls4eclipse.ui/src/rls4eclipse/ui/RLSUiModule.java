@@ -27,6 +27,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator;
 import org.eclipse.xtext.ui.editor.IXtextEditorCallback;
 import org.eclipse.xtext.ui.editor.IXtextEditorCallback.NullImpl;
+import org.eclipse.xtext.ui.editor.outline.IOutlineTreeProvider;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
 import org.eclipse.xtext.ui.editor.validation.ValidatingEditorCallback;
 import org.eclipse.xtext.ui.refactoring.IRenameStrategy;
@@ -36,6 +37,7 @@ import com.google.inject.name.Names;
 
 import rls4eclipse.ui.contentassist.AbstractRLSProposalProvider;
 import rls4eclipse.ui.contentassist.RLSProposalProvider;
+import rls4eclipse.ui.outline.RLSOutlineTreeProvider;
 import rls4eclipse.ui.renaming.RenameRefactor;
 import rls4eclipse.ui.syntaxhighlighting.CLHighlightingConfiguration;
 //import rls4eclipse.ui.syntaxhighlighting.CLHighlightingConfiguration;
@@ -62,9 +64,9 @@ public class RLSUiModule extends AbstractRLSUiModule {
 	public Class<? extends AbstractRLSProposalProvider> bindAbstractMyDslProposalProvider() {
 		return RLSProposalProvider.class;
 	}
-	// public Class<? extends IOutlineTreeProvider> bindIOutlineTreeProvider() {
-	// return RuleLangOutlineTreeProvider.class;
-//	}
+	 public Class<? extends IOutlineTreeProvider> bindIOutlineTreeProvider() {
+	 return RLSOutlineTreeProvider.class;
+}
 
 	public Class<? extends IXtextEditorCallback> bindIXtextEditorCallback() {
 		return NullImpl.class;
